@@ -19,7 +19,8 @@ namespace BookStore.API
                 try
                 {
                     var context = services.GetRequiredService<AppDbContext>();
-                    // context.Database.EnsureCreated();
+                    context.Database.EnsureCreated();
+                    // context.Database.Migrate();
                     // SeedData.Initialize(services);
                 }
                 catch (Exception ex)

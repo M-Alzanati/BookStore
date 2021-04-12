@@ -27,9 +27,12 @@ namespace BookStore.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var issuer = Configuration["Jwt:Issuer"];
+            var key = Configuration["Jwt:Key"];
 
             services.AddDbContext(connectionString);
+            services.AddIdentityDbContext(connectionString, issuer, key);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -55,6 +58,8 @@ namespace BookStore.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

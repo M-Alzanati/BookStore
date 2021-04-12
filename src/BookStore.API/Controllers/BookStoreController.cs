@@ -7,9 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BookStore.API.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class BookStoreController : ControllerBase
+    public class BookStoreController : BaseApiController
     {
         private readonly ILogger<BookStoreController> _logger;
 
