@@ -26,6 +26,10 @@ namespace BookStore.Infrastructure
 
         protected override void Load(ContainerBuilder builder)
         {
+            builder
+                .RegisterAssemblyTypes(_assemblies.ToArray())
+                .AsImplementedInterfaces();
+
             builder.RegisterType<EfRepository>().As<IRepository>()
                 .InstancePerLifetimeScope();
         }

@@ -5,6 +5,7 @@ using BookStore.Infrastructure.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.API
 {
@@ -20,7 +21,7 @@ namespace BookStore.API
                 {
                     var context = services.GetRequiredService<AppDbContext>();
                     context.Database.EnsureCreated();
-                    // context.Database.Migrate();
+                    context.Database.Migrate();
                     // SeedData.Initialize(services);
                 }
                 catch (Exception ex)
