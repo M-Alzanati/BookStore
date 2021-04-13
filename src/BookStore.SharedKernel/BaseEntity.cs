@@ -2,6 +2,6 @@ namespace BookStore.SharedKernel
 {
     public abstract class BaseEntity
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

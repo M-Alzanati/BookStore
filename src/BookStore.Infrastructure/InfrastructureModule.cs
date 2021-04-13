@@ -4,6 +4,9 @@ using Autofac;
 using BookStore.Core;
 using BookStore.Infrastructure.Data;
 using BookStore.SharedKernel.Interfaces;
+using BookStore.Infrastructure.Services;
+using BookStore.Core.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace BookStore.Infrastructure
 {
@@ -31,6 +34,12 @@ namespace BookStore.Infrastructure
                 .AsImplementedInterfaces();
 
             builder.RegisterType<EfRepository>().As<IRepository>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<TenantService>().As<ITenantService>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<QueryStringTenantIdentificationService>().As<ITenantIdentificationService<HttpContext>>()
                 .InstancePerLifetimeScope();
         }
     }

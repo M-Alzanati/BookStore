@@ -8,5 +8,7 @@ namespace BookStore.Core.Entities
         public string Name { set; get; }
 
         public ICollection<Book> Books { set; get; }
+
+        public Tenant Tenant { set; get; }
     }
 }

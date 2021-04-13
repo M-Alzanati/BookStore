@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace BookStore.Infrastructure.Data
+namespace BookStore.Core.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-
     }
 }

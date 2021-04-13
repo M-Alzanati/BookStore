@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using BookStore.SharedKernel;
 using BookStore.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq.Expressions;
 
 namespace BookStore.Infrastructure.Data
 {
@@ -16,14 +18,19 @@ namespace BookStore.Infrastructure.Data
             _dbContext = dbContext;
         }
 
-        public T GetById<T>(int id) where T : BaseEntity
+        public T GetById<T>(string id) where T : BaseEntity
         {
             return _dbContext.Set<T>().SingleOrDefault(e => e.Id == id);
         }
 
-        public Task<T> GetByIdAsync<T>(int id) where T : BaseEntity
+        public Task<T> GetByIdAsync<T>(string id) where T : BaseEntity
         {
             return _dbContext.Set<T>().SingleOrDefaultAsync(e => e.Id == id);
+        }
+
+        public Task<T> GetByIdAsync<T>(Expression<Func<T, bool>> predicate) where T : BaseEntity
+        {
+            return _dbContext.Set<T>().SingleOrDefaultAsync(predicate);
         }
 
         public Task<List<T>> ListAsync<T>() where T : BaseEntity
@@ -49,6 +56,11 @@ namespace BookStore.Infrastructure.Data
         {
             _dbContext.Set<T>().Remove(entity);
             return _dbContext.SaveChangesAsync();
+        }
+
+        public Task<List<T>> ListAsync<T>(Func<T, bool> predicate) where T : BaseEntity
+        {
+            return Task.FromResult(_dbContext.Set<T>().Where(predicate).ToList());
         }
     }
 }
