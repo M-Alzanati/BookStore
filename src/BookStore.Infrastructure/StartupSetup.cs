@@ -1,11 +1,15 @@
 using System;
 using System.Text;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using BookStore.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using BookStore.Infrastructure.Data;
+using BookStore.Core.Entities;
+using BookStore.Core.DTO;
+using Microsoft.Extensions.Configuration;
 
 namespace BookStore.Infrastructure
 {
@@ -69,6 +73,13 @@ namespace BookStore.Infrastructure
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(validKey))
                 };
             });
+        }
+
+        public static TenantMapping GetTenantMapping(this IConfiguration configuration)
+        {
+            var tenantMapping = new TenantMapping();
+            configuration.GetSection("Tenants").Bind(tenantMapping);
+            return tenantMapping;
         }
     }
 }
