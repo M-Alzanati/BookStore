@@ -13,12 +13,14 @@ namespace BookStore.Infrastructure.Data.Config
             builder
                 .HasMany<Book>(a => a.Books)
                 .WithOne(b => b.Author)
-                .HasForeignKey(b => b.AuthorId);
+                .HasForeignKey(b => b.AuthorId)
+                .IsRequired();
 
             builder
                 .HasOne<Nationality>(a => a.Nationality)
                 .WithOne(n => n.Author)
-                .HasForeignKey<Author>(a => a.NationalityId);
+                .HasForeignKey<Author>(a => a.NationalityId)
+                .IsRequired();
 
             builder
                 .HasOne<Tenant>(a => a.Tenant)
