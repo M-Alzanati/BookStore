@@ -17,8 +17,10 @@ namespace BookStore.Core.Entities
 
         public Category Category { set; get; }
 
-        public ICollection<Review> Reviews { set; get; }
+        public string TenantId { set; get; }
 
         public Tenant Tenant { set; get; }
+
+        public ICollection<Review> Reviews { set; get; }
     }
 }

@@ -9,6 +9,8 @@ namespace BookStore.Core.Entities
 
         public Author Author { set; get; }
 
+        public string TenantId { set; get; }
+
         public Tenant Tenant { set; get; }
     }
 }

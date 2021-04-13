@@ -19,9 +19,13 @@ namespace BookStore.API
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<AppDbContext>();
-                    // context.Database.EnsureCreated();
-                    // context.Database.Migrate();
+                    var appContext = services.GetRequiredService<AppDbContext>();
+                    appContext.Database.EnsureCreated();
+                    appContext.Database.Migrate();
+
+                    var IdentityContext = services.GetRequiredService<IdentityDbContext>();
+                    IdentityContext.Database.EnsureCreated();
+                    IdentityContext.Database.Migrate();
                 }
                 catch (Exception ex)
                 {

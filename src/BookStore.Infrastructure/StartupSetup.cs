@@ -21,10 +21,7 @@ namespace BookStore.Infrastructure
 
         public static void AddIdentityDbContext(this IServiceCollection services, string connectionString, string validIssuer, string validKey)
         {
-            services.AddDbContext<IdentityDbContext>(opts =>
-            {
-                opts.UseMySQL(connectionString);
-            });
+            services.AddDbContext<IdentityDbContext>(opts => opts.UseMySQL(connectionString));
 
             services.AddDefaultIdentity<ApplicationUser>(opts =>
             {
