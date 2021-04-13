@@ -8,7 +8,7 @@ namespace BookStore.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Tenant> builder)
         {
-            throw new System.NotImplementedException();
+            builder.HasKey(r => r.Id);
         }
     }
 }

@@ -8,7 +8,23 @@ namespace BookStore.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Book> builder)
         {
-            throw new System.NotImplementedException();
+            builder.HasKey(r => r.Id);
+
+            builder
+                .HasMany<Review>(b => b.Reviews)
+                .WithOne(r => r.Book)
+                .HasForeignKey(r => r.BookId);
+
+            builder
+                .HasOne<Category>(b => b.Category)
+                .WithOne(c => c.Book)
+                .HasForeignKey<Book>(b => b.CategoryId);
+
+            builder
+                .HasOne<Tenant>(b => b.Tenant)
+                .WithOne(t => t.Book)
+                .HasForeignKey<Book>(b => b.TenantId)
+                .IsRequired();
         }
     }
 }

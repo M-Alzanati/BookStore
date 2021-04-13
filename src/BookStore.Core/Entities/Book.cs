@@ -9,7 +9,11 @@ namespace BookStore.Core.Entities
 
         public decimal Price { set; get; }
 
+        public string AuthorId { set; get; }
+
         public Author Author { set; get; }
+
+        public string CategoryId { set; get; }
 
         public Category Category { set; get; }
 

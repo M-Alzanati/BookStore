@@ -9,7 +9,9 @@ namespace BookStore.Core.Entities
 
         public byte Rating { set; get; }
 
-        public ICollection<Book> Books { set; get; }
+        public string BookId { set; get; }
+
+        public Book Book { set; get; }
 
         public Tenant Tenant { set; get; }
     }

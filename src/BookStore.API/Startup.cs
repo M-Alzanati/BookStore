@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using BookStore.Infrastructure;
 using Autofac;
+using Microsoft.AspNetCore.Http;
 
 namespace BookStore.API
 {
@@ -33,6 +34,7 @@ namespace BookStore.API
 
             services.AddDbContext(connectionString);
             services.AddIdentityDbContext(connectionString, issuer, key);
+            services.UseTenant();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

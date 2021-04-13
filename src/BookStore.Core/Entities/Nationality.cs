@@ -7,7 +7,7 @@ namespace BookStore.Core.Entities
     {
         public string Name { set; get; }
 
-        public ICollection<Author> Authors { set; get; }
+        public Author Author { set; get; }
 
         public Tenant Tenant { set; get; }
     }

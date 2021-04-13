@@ -7,7 +7,9 @@ namespace BookStore.Core.Entities
     {
         public string Name { set; get; }
 
-        public Nationality Nationality { set; get; }
+        public string NationalityId { set; get; }
+
+        public virtual Nationality Nationality { set; get; }
 
         public ICollection<Book> Books { set; get; }
 

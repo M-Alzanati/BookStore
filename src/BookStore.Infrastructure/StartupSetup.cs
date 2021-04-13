@@ -10,6 +10,7 @@ using BookStore.Infrastructure.Data;
 using BookStore.Core.Entities;
 using BookStore.Core.DTO;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
 
 namespace BookStore.Infrastructure
 {
@@ -81,5 +82,8 @@ namespace BookStore.Infrastructure
             configuration.GetSection("Tenants").Bind(tenantMapping);
             return tenantMapping;
         }
+
+        public static void UseTenant(this IServiceCollection services) =>
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     }
 }
