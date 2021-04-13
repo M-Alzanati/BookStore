@@ -21,6 +21,7 @@ namespace BookStore.Infrastructure.Services
 
         public override string GetCurrentTenant(HttpContext context)
         {
+            // api key
             var tenant = context.Request.Query["Tenant"].ToString();
 
             if (string.IsNullOrWhiteSpace(tenant) || !this._tenants.Tenants.Values.Contains(tenant,

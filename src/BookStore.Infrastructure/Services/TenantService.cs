@@ -1,9 +1,10 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using BookStore.SharedKernel.Interfaces;
 using BookStore.Core.Entities;
 using BookStore.Core.Interfaces;
-using Microsoft.AspNetCore.Http;
 
 namespace BookStore.Infrastructure.Services
 {
@@ -13,17 +14,30 @@ namespace BookStore.Infrastructure.Services
 
         private readonly ITenantIdentificationService<HttpContext> _service;
 
+        private readonly IRepository _repository;
+
         public TenantService(
             IHttpContextAccessor accessor,
-            ITenantIdentificationService<HttpContext> tenantIdentification)
+            ITenantIdentificationService<HttpContext> tenantIdentification,
+            IRepository repository)
         {
             _httpContext = accessor.HttpContext;
             _service = tenantIdentification;
+            _repository = repository;
         }
 
         public async Task<string> GetTenantId()
         {
-            return await Task.FromResult(_service.GetCurrentTenant(_httpContext));
+            var apiKey = await Task.FromResult(_service.GetCurrentTenant(_httpContext));
+
+            Guid apiKeyGuid;
+            if (!Guid.TryParse(apiKey, out apiKeyGuid))
+            {
+                return null;
+            }
+
+            var tenant = await _repository.GetByIdAsync<Tenant>(r => r.ApiKey == apiKey);
+            return tenant.Id;
         }
     }
 }

@@ -36,10 +36,10 @@ namespace BookStore.Infrastructure
             builder.RegisterType<EfRepository>().As<IRepository>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<TenantService>().As<ITenantService>()
+            builder.RegisterType<QueryStringTenantIdentificationService>().As<ITenantIdentificationService<HttpContext>>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<QueryStringTenantIdentificationService>().As<ITenantIdentificationService<HttpContext>>()
+            builder.RegisterType<TenantService>().As<ITenantService>()
                 .InstancePerLifetimeScope();
         }
     }
