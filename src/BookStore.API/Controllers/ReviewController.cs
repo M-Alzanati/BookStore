@@ -33,15 +33,13 @@ namespace BookStore.API.Controllers
         [Route("add")]
         public async Task<IActionResult> AddReview([FromBody] ReviewModelDTO review)
         {
-            if (ModelState.IsValid)
-            {
-                var tenantId = _tenantService.GetTenantIdAsync();
-                var myReview = ReviewModelDTO.FromReviewDTO(review);
-                var addedReview = await _repository.AddAsync<Review>(myReview);
-                return Ok(addedReview);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return BadRequest(ModelState);
+            var tenantId = await _tenantService.GetTenantIdAsync();
+            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
+
+            var addedReview = await _repository.AddAsync<Review>(ReviewModelDTO.FromReviewDTO(review));
+            return Ok(addedReview);
         }
     }
 }

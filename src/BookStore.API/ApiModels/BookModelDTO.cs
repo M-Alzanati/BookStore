@@ -7,6 +7,8 @@ namespace BookStore.API.ApiModels
 {
     public class BookModelDTO
     {
+        public string Id { set; get; }
+
         [Required(ErrorMessage = "Book Name Is Required")]
         public string Name { set; get; }
 
@@ -16,9 +18,6 @@ namespace BookStore.API.ApiModels
         [Required(ErrorMessage = "Book Author Id Is Required")]
         public string AuthorId { set; get; }
 
-        [Required(ErrorMessage = "Book Category Id Is Required")]
-        public string CategoryId { set; get; }
-
         public static BookModelDTO FromBook(Book item)
         {
             return new BookModelDTO
@@ -26,7 +25,7 @@ namespace BookStore.API.ApiModels
                 Name = item.Name,
                 Price = item.Price,
                 AuthorId = item.AuthorId,
-                CategoryId = item.CategoryId
+                Id = item.Id
             };
         }
 
@@ -38,7 +37,7 @@ namespace BookStore.API.ApiModels
                 Name = book.Name,
                 Price = book.Price,
                 AuthorId = book.AuthorId,
-                CategoryId = book.CategoryId
+                Id = book.Id
             }).ToList();
         }
 
@@ -49,7 +48,7 @@ namespace BookStore.API.ApiModels
                 Name = item.Name,
                 Price = item.Price,
                 AuthorId = item.AuthorId,
-                CategoryId = item.CategoryId
+                Id = item.Id
             };
         }
     }

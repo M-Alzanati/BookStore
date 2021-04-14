@@ -20,9 +20,9 @@ namespace BookStore.Infrastructure.Data.Config
                 .HasForeignKey(r => r.BookId);
 
             builder
-                .HasOne<Category>(b => b.Category)
+                .HasMany<Category>(b => b.Categories)
                 .WithOne(c => c.Book)
-                .HasForeignKey<Book>(b => b.CategoryId);
+                .HasForeignKey(c => c.BookId);
 
             builder
                 .HasOne<Tenant>(b => b.Tenant)

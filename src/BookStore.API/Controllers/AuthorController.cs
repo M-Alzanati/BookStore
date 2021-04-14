@@ -14,23 +14,46 @@ using BookStore.Core.Entities;
 namespace BookStore.API.Controllers
 {
     [Authorize]
-    [Route("author")]
+    [Route("authors")]
     public class AuthorController : BaseApiController
     {
         private readonly ILogger<AuthorController> _logger;
 
         private readonly IRepository _repository;
 
-        public AuthorController(ILogger<AuthorController> logger, IRepository repository)
+        private readonly ITenantService _tenantService;
+
+        public AuthorController(ILogger<AuthorController> logger, IRepository repository, ITenantService tenantService)
         {
             _logger = logger;
             _repository = repository;
+            _tenantService = tenantService;
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public async Task<IActionResult> AddAuthor([FromBody] AuthorModelDTO model)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var tenantId = await _tenantService.GetTenantIdAsync();
+            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
+
+            var myAuthor = AuthorModelDTO.FromAuthorDTO(model);
+            myAuthor.TenantId = tenantId;
+
+            var addedAuthor = await _repository.AddAsync<Author>(myAuthor);
+            return (Ok(AuthorModelDTO.FromAuthor(addedAuthor)));
         }
 
         [HttpGet]
-        public Task<IActionResult> GetNationalites()
+        [Route("nationalites")]
+        public async Task<IActionResult> GetNationalites()
         {
-            throw new NotImplementedException();
+            var tenantId = await _tenantService.GetTenantIdAsync();
+            var items = (await _repository.ListAsync<Nationality>(n => n.TenantId == tenantId))
+                            .Select(NationalityDTO.FromNationality);
+            return (Ok(items));
         }
     }
 }
