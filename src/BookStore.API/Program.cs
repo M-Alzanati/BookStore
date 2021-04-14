@@ -20,12 +20,13 @@ namespace BookStore.API
                 try
                 {
                     var appContext = services.GetRequiredService<AppDbContext>();
-                    appContext.Database.EnsureCreated();
-                    appContext.Database.Migrate();
+                    appContext.Database.EnsureCreated();    // check if db is created
+                    appContext.Database.Migrate();  // run pending migrations
+                    SeedData.Initialize(services);  // seed data
 
                     var IdentityContext = services.GetRequiredService<IdentityDbContext>();
-                    IdentityContext.Database.EnsureCreated();
-                    IdentityContext.Database.Migrate();
+                    IdentityContext.Database.EnsureCreated();   // check if db is created
+                    IdentityContext.Database.Migrate(); // run pending migrations
                 }
                 catch (Exception ex)
                 {
@@ -34,12 +35,12 @@ namespace BookStore.API
                 }
             }
 
-            host.Run();
+            host.Run(); // run application
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+            .UseServiceProviderFactory(new AutofacServiceProviderFactory()) // use autofac instead of default DI
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder

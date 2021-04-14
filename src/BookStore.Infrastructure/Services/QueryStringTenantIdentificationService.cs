@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using BookStore.Core.DTO;
-using BookStore.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
@@ -21,11 +20,11 @@ namespace BookStore.Infrastructure.Services
 
         public override string GetCurrentTenant(HttpContext context)
         {
-            // api key
-            var tenant = context.Request.Query["Tenant"].ToString();
+            // tenant key
+            var tenant = context.Request.Query["TenantKey"].ToString();
 
-            if (string.IsNullOrWhiteSpace(tenant) || !this._tenants.Tenants.Values.Contains(tenant,
-                StringComparer.InvariantCultureIgnoreCase))
+            if (string.IsNullOrWhiteSpace(tenant) ||
+                !this._tenants.Tenants.Keys.Contains(tenant, StringComparer.InvariantCultureIgnoreCase))
             {
                 return this._tenants.Default;
             }
