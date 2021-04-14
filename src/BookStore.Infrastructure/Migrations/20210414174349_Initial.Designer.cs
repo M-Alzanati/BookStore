@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStore.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210414144445_AddTenant")]
-    partial class AddTenant
+    [Migration("20210414174349_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,7 @@ namespace BookStore.Infrastructure.Migrations
             modelBuilder.Entity("BookStore.Core.Entities.Author", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(767)");
 
                     b.Property<string>("Name")
@@ -39,8 +40,7 @@ namespace BookStore.Infrastructure.Migrations
                     b.HasIndex("NationalityId")
                         .IsUnique();
 
-                    b.HasIndex("TenantId")
-                        .IsUnique();
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Authors");
                 });
@@ -48,6 +48,7 @@ namespace BookStore.Infrastructure.Migrations
             modelBuilder.Entity("BookStore.Core.Entities.Book", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(767)");
 
                     b.Property<string>("AuthorId")
@@ -58,7 +59,7 @@ namespace BookStore.Infrastructure.Migrations
                         .HasColumnType("varchar(767)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(767)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
@@ -74,8 +75,10 @@ namespace BookStore.Infrastructure.Migrations
                     b.HasIndex("CategoryId")
                         .IsUnique();
 
-                    b.HasIndex("TenantId")
+                    b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Books");
                 });
@@ -83,6 +86,7 @@ namespace BookStore.Infrastructure.Migrations
             modelBuilder.Entity("BookStore.Core.Entities.Category", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(767)");
 
                     b.Property<string>("Name")
@@ -94,8 +98,7 @@ namespace BookStore.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId")
-                        .IsUnique();
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Categories");
                 });
@@ -103,6 +106,7 @@ namespace BookStore.Infrastructure.Migrations
             modelBuilder.Entity("BookStore.Core.Entities.Nationality", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(767)");
 
                     b.Property<string>("Name")
@@ -114,8 +118,7 @@ namespace BookStore.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId")
-                        .IsUnique();
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Nationalities");
                 });
@@ -123,6 +126,7 @@ namespace BookStore.Infrastructure.Migrations
             modelBuilder.Entity("BookStore.Core.Entities.Review", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(767)");
 
                     b.Property<string>("BookId")
@@ -142,8 +146,7 @@ namespace BookStore.Infrastructure.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.HasIndex("TenantId")
-                        .IsUnique();
+                    b.HasIndex("TenantId");
 
                     b.ToTable("Reviews");
                 });
@@ -151,6 +154,7 @@ namespace BookStore.Infrastructure.Migrations
             modelBuilder.Entity("BookStore.Core.Entities.Tenant", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("varchar(767)");
 
                     b.Property<string>("ApiKey")
@@ -176,8 +180,8 @@ namespace BookStore.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("BookStore.Core.Entities.Tenant", "Tenant")
-                        .WithOne("Author")
-                        .HasForeignKey("BookStore.Core.Entities.Author", "TenantId")
+                        .WithMany("Authors")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -199,8 +203,8 @@ namespace BookStore.Infrastructure.Migrations
                         .HasForeignKey("BookStore.Core.Entities.Book", "CategoryId");
 
                     b.HasOne("BookStore.Core.Entities.Tenant", "Tenant")
-                        .WithOne("Book")
-                        .HasForeignKey("BookStore.Core.Entities.Book", "TenantId")
+                        .WithMany("Books")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -214,8 +218,8 @@ namespace BookStore.Infrastructure.Migrations
             modelBuilder.Entity("BookStore.Core.Entities.Category", b =>
                 {
                     b.HasOne("BookStore.Core.Entities.Tenant", "Tenant")
-                        .WithOne("Category")
-                        .HasForeignKey("BookStore.Core.Entities.Category", "TenantId")
+                        .WithMany("Categories")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -225,8 +229,8 @@ namespace BookStore.Infrastructure.Migrations
             modelBuilder.Entity("BookStore.Core.Entities.Nationality", b =>
                 {
                     b.HasOne("BookStore.Core.Entities.Tenant", "Tenant")
-                        .WithOne("Nationality")
-                        .HasForeignKey("BookStore.Core.Entities.Nationality", "TenantId")
+                        .WithMany("Nationalities")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -240,8 +244,8 @@ namespace BookStore.Infrastructure.Migrations
                         .HasForeignKey("BookId");
 
                     b.HasOne("BookStore.Core.Entities.Tenant", "Tenant")
-                        .WithOne("Review")
-                        .HasForeignKey("BookStore.Core.Entities.Review", "TenantId")
+                        .WithMany("Reviews")
+                        .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -272,15 +276,15 @@ namespace BookStore.Infrastructure.Migrations
 
             modelBuilder.Entity("BookStore.Core.Entities.Tenant", b =>
                 {
-                    b.Navigation("Author");
+                    b.Navigation("Authors");
 
-                    b.Navigation("Book");
+                    b.Navigation("Books");
 
-                    b.Navigation("Category");
+                    b.Navigation("Categories");
 
-                    b.Navigation("Nationality");
+                    b.Navigation("Nationalities");
 
-                    b.Navigation("Review");
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,13 +1,17 @@
 using BookStore.Core.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookStore.API.ApiModels
 {
     public class ReviewModelDTO
     {
+        [Required(ErrorMessage = "Review Text Is Required")]
         public string Text { set; get; }
 
+        [Required(ErrorMessage = "Review Rating Is Required")]
         public byte Rating { set; get; }
 
+        [Required(ErrorMessage = "Book Id Is Required")]
         public string BookId { set; get; }
 
         public static ReviewModelDTO FromReview(Review item)

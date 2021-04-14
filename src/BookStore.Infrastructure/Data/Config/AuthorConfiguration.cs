@@ -11,6 +11,10 @@ namespace BookStore.Infrastructure.Data.Config
             builder.HasKey(r => r.Id);
 
             builder
+                .Property(r => r.Id)
+                .ValueGeneratedOnAdd();
+
+            builder
                 .HasMany<Book>(a => a.Books)
                 .WithOne(b => b.Author)
                 .HasForeignKey(b => b.AuthorId)
@@ -24,8 +28,7 @@ namespace BookStore.Infrastructure.Data.Config
 
             builder
                 .HasOne<Tenant>(a => a.Tenant)
-                .WithOne(t => t.Author)
-                .HasForeignKey<Author>(a => a.TenantId)
+                .WithMany(t => t.Authors)
                 .IsRequired();
 
             builder.HasQueryFilter(a => !string.IsNullOrEmpty(a.TenantId));

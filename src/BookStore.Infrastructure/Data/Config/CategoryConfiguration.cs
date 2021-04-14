@@ -11,9 +11,12 @@ namespace BookStore.Infrastructure.Data.Config
             builder.HasKey(r => r.Id);
 
             builder
+                .Property(r => r.Id)
+                .ValueGeneratedOnAdd();
+
+            builder
                 .HasOne<Tenant>(c => c.Tenant)
-                .WithOne(t => t.Category)
-                .HasForeignKey<Category>(c => c.TenantId)
+                .WithMany(t => t.Categories)
                 .IsRequired();
 
             builder.HasQueryFilter(a => !string.IsNullOrEmpty(a.TenantId));

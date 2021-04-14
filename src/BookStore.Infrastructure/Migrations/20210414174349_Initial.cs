@@ -7,7 +7,7 @@ namespace BookStore.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Tenant",
+                name: "Tenants",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(767)", nullable: false),
@@ -17,7 +17,7 @@ namespace BookStore.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tenant", x => x.Id);
+                    table.PrimaryKey("PK_Tenants", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,9 +32,9 @@ namespace BookStore.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Categories_Tenant_TenantId",
+                        name: "FK_Categories_Tenants_TenantId",
                         column: x => x.TenantId,
-                        principalTable: "Tenant",
+                        principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -51,9 +51,9 @@ namespace BookStore.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Nationalities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Nationalities_Tenant_TenantId",
+                        name: "FK_Nationalities_Tenants_TenantId",
                         column: x => x.TenantId,
-                        principalTable: "Tenant",
+                        principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -64,7 +64,7 @@ namespace BookStore.Infrastructure.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(767)", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    NationalityId = table.Column<string>(type: "varchar(767)", nullable: true),
+                    NationalityId = table.Column<string>(type: "varchar(767)", nullable: false),
                     TenantId = table.Column<string>(type: "varchar(767)", nullable: false)
                 },
                 constraints: table =>
@@ -75,11 +75,11 @@ namespace BookStore.Infrastructure.Migrations
                         column: x => x.NationalityId,
                         principalTable: "Nationalities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Authors_Tenant_TenantId",
+                        name: "FK_Authors_Tenants_TenantId",
                         column: x => x.TenantId,
-                        principalTable: "Tenant",
+                        principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -89,9 +89,9 @@ namespace BookStore.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(767)", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "varchar(767)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    AuthorId = table.Column<string>(type: "varchar(767)", nullable: true),
+                    AuthorId = table.Column<string>(type: "varchar(767)", nullable: false),
                     CategoryId = table.Column<string>(type: "varchar(767)", nullable: true),
                     TenantId = table.Column<string>(type: "varchar(767)", nullable: false)
                 },
@@ -103,7 +103,7 @@ namespace BookStore.Infrastructure.Migrations
                         column: x => x.AuthorId,
                         principalTable: "Authors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Books_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -111,9 +111,9 @@ namespace BookStore.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Books_Tenant_TenantId",
+                        name: "FK_Books_Tenants_TenantId",
                         column: x => x.TenantId,
-                        principalTable: "Tenant",
+                        principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -138,9 +138,9 @@ namespace BookStore.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reviews_Tenant_TenantId",
+                        name: "FK_Reviews_Tenants_TenantId",
                         column: x => x.TenantId,
-                        principalTable: "Tenant",
+                        principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -154,8 +154,7 @@ namespace BookStore.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_TenantId",
                 table: "Authors",
-                column: "TenantId",
-                unique: true);
+                column: "TenantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_AuthorId",
@@ -169,22 +168,25 @@ namespace BookStore.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Books_Name",
+                table: "Books",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Books_TenantId",
                 table: "Books",
-                column: "TenantId",
-                unique: true);
+                column: "TenantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_TenantId",
                 table: "Categories",
-                column: "TenantId",
-                unique: true);
+                column: "TenantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Nationalities_TenantId",
                 table: "Nationalities",
-                column: "TenantId",
-                unique: true);
+                column: "TenantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_BookId",
@@ -194,8 +196,7 @@ namespace BookStore.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_TenantId",
                 table: "Reviews",
-                column: "TenantId",
-                unique: true);
+                column: "TenantId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -216,7 +217,7 @@ namespace BookStore.Infrastructure.Migrations
                 name: "Nationalities");
 
             migrationBuilder.DropTable(
-                name: "Tenant");
+                name: "Tenants");
         }
     }
 }

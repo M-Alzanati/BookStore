@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using BookStore.SharedKernel.Interfaces;
@@ -26,7 +25,7 @@ namespace BookStore.Infrastructure.Services
             _repository = repository;
         }
 
-        public async Task<string> GetTenantId()
+        public async Task<string> GetTenantIdAsync()
         {
             var apiKey = await Task.FromResult(_service.GetCurrentTenant(_httpContext));
 

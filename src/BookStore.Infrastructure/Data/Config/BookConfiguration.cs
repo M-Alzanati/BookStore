@@ -11,6 +11,10 @@ namespace BookStore.Infrastructure.Data.Config
             builder.HasKey(r => r.Id);
 
             builder
+                .Property(r => r.Id)
+                .ValueGeneratedOnAdd();
+
+            builder
                 .HasMany<Review>(b => b.Reviews)
                 .WithOne(r => r.Book)
                 .HasForeignKey(r => r.BookId);
@@ -22,11 +26,12 @@ namespace BookStore.Infrastructure.Data.Config
 
             builder
                 .HasOne<Tenant>(b => b.Tenant)
-                .WithOne(t => t.Book)
-                .HasForeignKey<Book>(b => b.TenantId)
+                .WithMany(t => t.Books)
                 .IsRequired();
 
             builder.HasQueryFilter(a => !string.IsNullOrEmpty(a.TenantId));
+
+            builder.HasIndex(b => b.Name).IsUnique();
         }
     }
 }

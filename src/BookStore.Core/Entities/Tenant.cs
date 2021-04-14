@@ -11,14 +11,14 @@ namespace BookStore.Core.Entities
 
         public bool IsActive { set; get; }
 
-        public Author Author { set; get; }
+        public ICollection<Author> Authors { set; get; }
 
-        public Book Book { set; get; }
+        public ICollection<Book> Books { set; get; }
 
-        public Category Category { set; get; }
+        public ICollection<Category> Categories { set; get; }
 
-        public Nationality Nationality { set; get; }
+        public ICollection<Nationality> Nationalities { set; get; }
 
-        public Review Review { set; get; }
+        public ICollection<Review> Reviews { set; get; }
     }
 }

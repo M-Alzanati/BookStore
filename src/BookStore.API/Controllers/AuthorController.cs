@@ -13,7 +13,8 @@ using BookStore.Core.Entities;
 
 namespace BookStore.API.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
+    [Route("author")]
     public class AuthorController : BaseApiController
     {
         private readonly ILogger<AuthorController> _logger;
@@ -24,6 +25,12 @@ namespace BookStore.API.Controllers
         {
             _logger = logger;
             _repository = repository;
+        }
+
+        [HttpGet]
+        public Task<IActionResult> GetNationalites()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -13,6 +13,7 @@ using BookStore.Core.Entities;
 
 namespace BookStore.API.Controllers
 {
+    [Authorize]
     public class ReviewController : BaseApiController
     {
         private readonly ILogger<ReviewController> _logger;
@@ -34,7 +35,7 @@ namespace BookStore.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var tenantId = _tenantService.GetTenantId();
+                var tenantId = _tenantService.GetTenantIdAsync();
                 var myReview = ReviewModelDTO.FromReviewDTO(review);
                 var addedReview = await _repository.AddAsync<Review>(myReview);
                 return Ok(addedReview);
