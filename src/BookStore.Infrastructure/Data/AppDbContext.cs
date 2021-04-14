@@ -27,5 +27,7 @@ namespace BookStore.Infrastructure.Data
         public DbSet<Nationality> Nationalities { set; get; }
 
         public DbSet<Review> Reviews { set; get; }
+
+        public DbSet<Tenant> Tenants { set; get; }
     }
 }
