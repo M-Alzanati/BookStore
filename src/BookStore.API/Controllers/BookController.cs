@@ -13,7 +13,8 @@ using BookStore.Core.Entities;
 
 namespace BookStore.API.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
+    [Route("Books")]
     public class BookController : BaseApiController
     {
         private readonly ILogger<BookController> _logger;
