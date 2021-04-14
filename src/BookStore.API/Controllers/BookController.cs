@@ -14,15 +14,15 @@ using BookStore.Core.Entities;
 namespace BookStore.API.Controllers
 {
     [AllowAnonymous]
-    public class BookStoreController : BaseApiController
+    public class BookController : BaseApiController
     {
-        private readonly ILogger<BookStoreController> _logger;
+        private readonly ILogger<BookController> _logger;
 
         private readonly IRepository _repository;
 
         private readonly ITenantService _tenantService;
 
-        public BookStoreController(ILogger<BookStoreController> logger, IRepository repository, ITenantService tenantService)
+        public BookController(ILogger<BookStoreController> logger, IRepository repository, ITenantService tenantService)
         {
             _logger = logger;
             _repository = repository;
@@ -30,7 +30,7 @@ namespace BookStore.API.Controllers
         }
 
         [HttpPost]
-        [Route("books/add")]
+        [Route("add")]
         public async Task<IActionResult> AddBook([FromBody] BookModelDTO model)
         {
             if (ModelState.IsValid)
@@ -45,7 +45,6 @@ namespace BookStore.API.Controllers
         }
 
         [HttpGet]
-        [Route("books/all")]
         public async Task<IActionResult> GetBooks()
         {
             var tenantId = _tenantService.GetTenantId();
@@ -54,7 +53,7 @@ namespace BookStore.API.Controllers
         }
 
         [HttpGet]
-        [Route("books/{name}")]
+        [Route("{name}")]
         public async Task<IActionResult> GetBook([FromRoute] string name)
         {
             var tenantId = _tenantService.GetTenantId();
