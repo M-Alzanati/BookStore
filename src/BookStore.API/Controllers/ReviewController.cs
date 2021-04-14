@@ -19,10 +19,28 @@ namespace BookStore.API.Controllers
 
         private readonly IRepository _repository;
 
-        public ReviewController(ILogger<ReviewController> logger, IRepository repository)
+        private readonly ITenantService _tenantService;
+
+        public ReviewController(ILogger<ReviewController> logger, IRepository repository, ITenantService tenantService)
         {
             _logger = logger;
             _repository = repository;
+            _tenantService = tenantService;
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public async Task<IActionResult> AddReview([FromBody] ReviewModelDTO review)
+        {
+            if (ModelState.IsValid)
+            {
+                var tenantId = _tenantService.GetTenantId();
+                var myReview = ReviewModelDTO.FromReviewDTO(review);
+                var addedReview = await _repository.AddAsync<Review>(myReview);
+                return Ok(addedReview);
+            }
+
+            return BadRequest(ModelState);
         }
     }
 }

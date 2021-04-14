@@ -22,7 +22,7 @@ namespace BookStore.API.Controllers
 
         private readonly ITenantService _tenantService;
 
-        public BookController(ILogger<BookStoreController> logger, IRepository repository, ITenantService tenantService)
+        public BookController(ILogger<BookController> logger, IRepository repository, ITenantService tenantService)
         {
             _logger = logger;
             _repository = repository;
@@ -59,21 +59,6 @@ namespace BookStore.API.Controllers
             var tenantId = _tenantService.GetTenantId();
             var myBook = await _repository.GetByIdAsync<Book>(book => book.Name == name);
             return Ok(BookModelDTO.FromBook(myBook));
-        }
-
-        [HttpPost]
-        [Route("reviews/add")]
-        public async Task<IActionResult> AddReview([FromBody] ReviewModelDTO review)
-        {
-            if (ModelState.IsValid)
-            {
-                var tenantId = _tenantService.GetTenantId();
-                var myReview = ReviewModelDTO.FromReviewDTO(review);
-                var addedReview = await _repository.AddAsync<Review>(myReview);
-                return Ok(addedReview);
-            }
-
-            return BadRequest(ModelState);
         }
     }
 }

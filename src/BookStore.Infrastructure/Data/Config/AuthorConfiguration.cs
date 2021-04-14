@@ -27,6 +27,8 @@ namespace BookStore.Infrastructure.Data.Config
                 .WithOne(t => t.Author)
                 .HasForeignKey<Author>(a => a.TenantId)
                 .IsRequired();
+
+            builder.HasQueryFilter(a => !string.IsNullOrEmpty(a.TenantId));
         }
     }
 }

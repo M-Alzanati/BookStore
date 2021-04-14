@@ -15,6 +15,8 @@ namespace BookStore.Infrastructure.Data.Config
                 .WithOne(t => t.Nationality)
                 .HasForeignKey<Nationality>(n => n.TenantId)
                 .IsRequired();
+
+            builder.HasQueryFilter(a => !string.IsNullOrEmpty(a.TenantId));
         }
     }
 }
