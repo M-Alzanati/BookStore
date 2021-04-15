@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace BookStore.Core.Entities
 {
+    /// <summary>
+    /// Represent review per book per tenant
+    /// </summary>
     public class Review : BaseEntity
     {
         public string Text { set; get; }

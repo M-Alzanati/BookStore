@@ -17,6 +17,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace BookStore.API
 {
+    /// <summary>
+    /// This starup class to load all configuration and configure services and middlewares
+    /// Also this class register the infrastructure module
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)

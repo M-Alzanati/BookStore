@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace BookStore.Infrastructure.Services
 {
+    /// <summary>
+    /// get tenant key from query string
+    /// </summary>
     public class QueryStringTenantIdentificationService : BaseIdentificationService
     {
         public QueryStringTenantIdentificationService(IConfiguration configuration)

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace BookStore.Core.Entities
 {
+    /// <summary>
+    /// Author class for holding information about this author and related books
+    /// </summary>
     public class Author : BaseEntity
     {
         public string Name { set; get; }

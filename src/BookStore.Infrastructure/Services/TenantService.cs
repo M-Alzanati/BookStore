@@ -7,6 +7,9 @@ using BookStore.Core.Interfaces;
 
 namespace BookStore.Infrastructure.Services
 {
+    /// <summary>
+    /// Implementation of ITenantService, which define the way to retrive tenant id
+    /// </summary>
     public class TenantService : ITenantService
     {
         private readonly HttpContext _httpContext;

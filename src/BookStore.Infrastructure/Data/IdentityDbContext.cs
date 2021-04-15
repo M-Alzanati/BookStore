@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BookStore.Infrastructure.Data
 {
+    /// <summary>
+    /// Idenitiy dbcontext
+    /// </summary>
     public class IdentityDbContext : IdentityDbContext<ApplicationUser>
     {
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options)

@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BookStore.API
 {
+    /// <summary>
+    /// Seed the database for the first time, if tenants already exist then this class will not touch the database
+    /// </summary>
     public static class SeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)

@@ -9,6 +9,9 @@ using System.Linq.Expressions;
 
 namespace BookStore.Infrastructure.Data
 {
+    /// <summary>
+    /// Implmentation of generic repository
+    /// </summary>
     public class EfRepository : IRepository
     {
         private readonly AppDbContext _dbContext;

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace BookStore.Core.Entities
 {
+    /// <summary>
+    /// Book information like name, category, author
+    /// </summary>
     public class Book : BaseEntity
     {
         public string Name { set; get; }

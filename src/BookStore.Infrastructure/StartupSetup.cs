@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace BookStore.Infrastructure
 {
+    /// <summary>
+    /// This class hold extension methods to load database contexts, and a strategy to use tenant
+    /// </summary>
     public static class StartupSetup
     {
         public static void AddDbContext(this IServiceCollection services, string connectionString) =>

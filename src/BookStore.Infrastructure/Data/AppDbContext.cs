@@ -4,6 +4,9 @@ using Ardalis.EFCore.Extensions;
 
 namespace BookStore.Infrastructure.Data
 {
+    /// <summary>
+    /// The application dbcontext
+    /// </summary>
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)

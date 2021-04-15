@@ -6,6 +6,9 @@ using BookStore.Core.DTO;
 
 namespace BookStore.Infrastructure.Services
 {
+    /// <summary>
+    /// Using host name to retrive tenant key from application.json
+    /// </summary>
     public sealed class HostTenantIdentificationService : BaseIdentificationService
     {
         public HostTenantIdentificationService(IConfiguration configuration)

@@ -10,6 +10,7 @@ using BookStore.API.ApiModels;
 using BookStore.SharedKernel.Interfaces;
 using BookStore.Core.Interfaces;
 using BookStore.Core.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace BookStore.API.Controllers
 {
@@ -32,6 +33,10 @@ namespace BookStore.API.Controllers
 
         [HttpPost]
         [Route("add")]
+        [SwaggerOperation(
+            Summary = "Create new author",
+            OperationId = "authors.add")
+        ]
         public async Task<IActionResult> AddAuthor([FromBody] AuthorModelDTO model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -48,6 +53,11 @@ namespace BookStore.API.Controllers
 
         [HttpGet]
         [Route("nationalites")]
+        [SwaggerOperation(
+            Summary = "Get nationalities per tenant",
+            Description = "Get nationalities per tenant",
+            OperationId = "authors.nationalites")
+        ]
         public async Task<IActionResult> GetNationalites()
         {
             var tenantId = await _tenantService.GetTenantIdAsync();

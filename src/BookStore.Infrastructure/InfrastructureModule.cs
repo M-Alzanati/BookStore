@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace BookStore.Infrastructure
 {
+    /// <summary>
+    /// Represent the infrastructure module that will load all definitions from core, infrastructure library
+    /// </summary>
     public class InfrastructureModule : Autofac.Module
     {
         private List<Assembly> _assemblies = new List<Assembly>();
