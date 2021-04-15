@@ -12,7 +12,7 @@ Welcome to bookstore multi-tenant app.
 
 # The Following Digram shows the tenant apporach
 
-![alt text](./service.png)
+![alt text](service.png)
 
 
 License
