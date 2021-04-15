@@ -1,4 +1,4 @@
-# Smart Doctor OCR
+# Mult-tenant bookstore
 
 
 ![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)
