@@ -11,20 +11,25 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using BookStore.Core.Entities;
 using BookStore.API.ApiModels;
+using Microsoft.Extensions.Logging;
 
 namespace BookStore.API.Controllers
 {
     [AllowAnonymous]
+    [Route("auth")]
     public class AuthenticateController : BaseApiController
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly IConfiguration _configuration;
 
-        public AuthenticateController(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        private readonly ILogger<AuthenticateController> _logger;
+
+        public AuthenticateController(ILogger<AuthenticateController> logger, UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
+            _logger = logger;
         }
 
         [HttpPost]

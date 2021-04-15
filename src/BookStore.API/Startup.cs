@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using BookStore.Infrastructure;
 using Autofac;
 using Microsoft.AspNetCore.Http;
+using BookStore.API.Middlewares;
 
 namespace BookStore.API
 {
@@ -84,6 +85,8 @@ namespace BookStore.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookStore.API v1"));
             }
+
+            app.UseRequestResponseLogging();
 
             app.UseHttpsRedirection();
 
