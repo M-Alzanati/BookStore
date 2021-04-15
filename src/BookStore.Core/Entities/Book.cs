@@ -1,3 +1,4 @@
+using System.Linq;
 using BookStore.SharedKernel;
 using System.Collections.Generic;
 
@@ -25,5 +26,11 @@ namespace BookStore.Core.Entities
         public Tenant Tenant { set; get; }
 
         public ICollection<Review> Reviews { set; get; }
+
+        public double? GetAvgRating()
+        {
+            var avg = this.Reviews?.Select(r => r.Rating)?.Average(r => r);
+            return avg;
+        }
     }
 }
