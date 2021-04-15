@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BookStore.Core.Entities;
 using BookStore.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BookStore.API
@@ -12,15 +13,42 @@ namespace BookStore.API
     /// </summary>
     public static class SeedData
     {
+        private const string adminUser = "admin@gmail.com";
+
+        private const string adminPassword = "P@$$w0rd";
+
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = serviceProvider.GetRequiredService<AppDbContext>())
             {
                 // Look for default tenants
-                if (context.Tenants.Any()) return;
+                if (!context.Tenants.Any())
+                {
+                    // add default tenants
+                    PopulateDb(context);
+                }
+            }
 
-                // add default tenants
-                PopulateDb(context);
+            using (var context = serviceProvider.GetRequiredService<IdentityDbContext>())
+            {
+                // add admin user
+                PopulateIdentityDb(serviceProvider);
+            }
+        }
+
+        private async static void PopulateIdentityDb(IServiceProvider serviceProvider)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var user = await userManager.FindByNameAsync(adminUser);
+
+            if (user == null)
+            {
+                user = new ApplicationUser() { Email = adminUser, UserName = adminUser };
+                var result = await userManager.CreateAsync(user, adminPassword);
+                if (!result.Succeeded)
+                {
+                    throw new Exception("Cannot create user: " + result.Errors.FirstOrDefault());
+                }
             }
         }
 

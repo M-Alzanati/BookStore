@@ -1,12 +1,12 @@
 using Xunit;
 using BookStore.Core.Entities;
 
-namespace BookStore.UnitTests
+namespace BookStore.UnitTests.Core
 {
     public class BookReviewsAvg
     {
         [Fact]
-        public void CalculateAvg()
+        public void CalculateExactAvg()
         {
             var review1 = new Review() { Rating = 5 };
             var review2 = new Review() { Rating = 5 };
