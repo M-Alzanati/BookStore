@@ -8,7 +8,7 @@ namespace BookStore.API.ApiModels
         [Required(ErrorMessage = "Review Text Is Required")]
         public string Text { set; get; }
 
-        [Required(ErrorMessage = "Review Rating Is Required")]
+        [Required(ErrorMessage = "Review Rating Is Required"), Range(1, 5)]
         public byte Rating { set; get; }
 
         [Required(ErrorMessage = "Book Id Is Required")]

@@ -33,6 +33,11 @@ namespace BookStore.Infrastructure.Data
             return _dbContext.Set<T>().SingleOrDefaultAsync(predicate);
         }
 
+        public Task<T> GetByIdAsync<T>(Expression<Func<T, IEnumerable<BaseEntity>>> include, Expression<Func<T, bool>> predicate) where T : BaseEntity
+        {
+            return _dbContext.Set<T>().Include(include).SingleOrDefaultAsync(predicate);
+        }
+
         public Task<List<T>> ListAsync<T>() where T : BaseEntity
         {
             return _dbContext.Set<T>().ToListAsync();

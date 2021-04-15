@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStore.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210414174349_Initial")]
+    [Migration("20210415022608_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,8 +37,7 @@ namespace BookStore.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NationalityId")
-                        .IsUnique();
+                    b.HasIndex("NationalityId");
 
                     b.HasIndex("TenantId");
 
@@ -72,8 +71,7 @@ namespace BookStore.Infrastructure.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("CategoryId")
-                        .IsUnique();
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -174,8 +172,8 @@ namespace BookStore.Infrastructure.Migrations
             modelBuilder.Entity("BookStore.Core.Entities.Author", b =>
                 {
                     b.HasOne("BookStore.Core.Entities.Nationality", "Nationality")
-                        .WithOne("Author")
-                        .HasForeignKey("BookStore.Core.Entities.Author", "NationalityId")
+                        .WithMany("Authors")
+                        .HasForeignKey("NationalityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -199,8 +197,8 @@ namespace BookStore.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("BookStore.Core.Entities.Category", "Category")
-                        .WithOne("Book")
-                        .HasForeignKey("BookStore.Core.Entities.Book", "CategoryId");
+                        .WithMany("Books")
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("BookStore.Core.Entities.Tenant", "Tenant")
                         .WithMany("Books")
@@ -266,12 +264,12 @@ namespace BookStore.Infrastructure.Migrations
 
             modelBuilder.Entity("BookStore.Core.Entities.Category", b =>
                 {
-                    b.Navigation("Book");
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("BookStore.Core.Entities.Nationality", b =>
                 {
-                    b.Navigation("Author");
+                    b.Navigation("Authors");
                 });
 
             modelBuilder.Entity("BookStore.Core.Entities.Tenant", b =>

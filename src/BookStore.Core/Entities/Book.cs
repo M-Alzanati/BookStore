@@ -13,7 +13,9 @@ namespace BookStore.Core.Entities
 
         public Author Author { set; get; }
 
-        public ICollection<Category> Categories { set; get; }
+        public string CategoryId { set; get; }
+
+        public Category Category { set; get; }
 
         public string TenantId { set; get; }
 

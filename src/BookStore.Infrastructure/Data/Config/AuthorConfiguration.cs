@@ -22,8 +22,7 @@ namespace BookStore.Infrastructure.Data.Config
 
             builder
                 .HasOne<Nationality>(a => a.Nationality)
-                .WithOne(n => n.Author)
-                .HasForeignKey<Author>(a => a.NationalityId)
+                .WithMany(n => n.Authors)
                 .IsRequired();
 
             builder

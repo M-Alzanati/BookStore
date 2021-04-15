@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -62,9 +63,16 @@ namespace BookStore.API.Controllers
             if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
 
             var myBook = await _repository.GetByIdAsync<Book>(
+                book => book.Reviews,
                 book => book.Name == name && book.TenantId == tenantId
             );
-            return (Ok(BookModelDTO.FromBook(myBook)));
+            if (myBook == null) return BadRequest($"Book: {name} not found");
+
+            var avg = myBook.Reviews?.Select(r => r.Rating)?.Average(r => r);
+            var result = BookModelDTO.FromBook(myBook);
+            result.AvgRating = avg;
+
+            return (Ok(result));
         }
 
         [HttpGet]

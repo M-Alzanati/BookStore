@@ -13,6 +13,8 @@ namespace BookStore.SharedKernel.Interfaces
 
         Task<T> GetByIdAsync<T>(Expression<Func<T, bool>> predicate) where T : BaseEntity;
 
+        Task<T> GetByIdAsync<T>(Expression<Func<T, IEnumerable<BaseEntity>>> include, Expression<Func<T, bool>> predicate) where T : BaseEntity;
+
         Task<List<T>> ListAsync<T>() where T : BaseEntity;
 
         Task<List<T>> ListAsync<T>(Func<T, bool> predicate) where T : BaseEntity;

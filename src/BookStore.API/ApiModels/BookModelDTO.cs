@@ -18,6 +18,8 @@ namespace BookStore.API.ApiModels
         [Required(ErrorMessage = "Book Author Id Is Required")]
         public string AuthorId { set; get; }
 
+        public double? AvgRating { set; get; }
+
         public static BookModelDTO FromBook(Book item)
         {
             return new BookModelDTO

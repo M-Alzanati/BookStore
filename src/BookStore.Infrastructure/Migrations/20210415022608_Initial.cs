@@ -148,8 +148,7 @@ namespace BookStore.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_NationalityId",
                 table: "Authors",
-                column: "NationalityId",
-                unique: true);
+                column: "NationalityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_TenantId",
@@ -164,8 +163,7 @@ namespace BookStore.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Books_CategoryId",
                 table: "Books",
-                column: "CategoryId",
-                unique: true);
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_Name",

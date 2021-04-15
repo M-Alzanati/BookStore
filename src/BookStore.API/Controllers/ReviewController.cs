@@ -14,6 +14,7 @@ using BookStore.Core.Entities;
 namespace BookStore.API.Controllers
 {
     [Authorize]
+    [Route("reviews")]
     public class ReviewController : BaseApiController
     {
         private readonly ILogger<ReviewController> _logger;
@@ -38,8 +39,11 @@ namespace BookStore.API.Controllers
             var tenantId = await _tenantService.GetTenantIdAsync();
             if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
 
-            var addedReview = await _repository.AddAsync<Review>(ReviewModelDTO.FromReviewDTO(review));
-            return Ok(addedReview);
+            var myReview = ReviewModelDTO.FromReviewDTO(review);
+            myReview.TenantId = tenantId;
+
+            var addedReview = await _repository.AddAsync<Review>(myReview);
+            return (Ok(ReviewModelDTO.FromReview(addedReview)));
         }
     }
 }
