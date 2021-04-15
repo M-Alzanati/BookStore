@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Http;
 using BookStore.API.ApiModels;
 using BookStore.SharedKernel.Interfaces;
 using BookStore.Core.Interfaces;
 using BookStore.Core.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace BookStore.API.Controllers
 {
@@ -32,6 +29,10 @@ namespace BookStore.API.Controllers
 
         [HttpPost]
         [Route("add")]
+        [SwaggerOperation(
+            Summary = "Add new review per book per tenant",
+            OperationId = "reviews.add")
+        ]
         public async Task<IActionResult> AddReview([FromBody] ReviewModelDTO review)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
