@@ -27,7 +27,8 @@ namespace BookStore.API.ApiModels
                 Name = item.Name,
                 Price = item.Price,
                 AuthorId = item.AuthorId,
-                Id = item.Id
+                Id = item.Id,
+                AvgRating = item.GetAvgRating()
             };
         }
 

@@ -81,11 +81,7 @@ namespace BookStore.API.Controllers
             );
             if (myBook == null) return BadRequest($"Book: {name} not found");
 
-            var avg = myBook.Reviews?.Select(r => r.Rating)?.Average(r => r);
-            var result = BookModelDTO.FromBook(myBook);
-            result.AvgRating = avg;
-
-            return (Ok(result));
+            return (Ok(BookModelDTO.FromBook(myBook)));
         }
 
         [HttpGet]
