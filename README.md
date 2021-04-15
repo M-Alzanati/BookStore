@@ -3,7 +3,7 @@
 
 ![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)
 
-Welcome to bookstore multi-tenant app.
+Welcome to bookstore multi-tenant app, this app using mysql database with two context, one for data, other for identity.
 ---
 
 * This app is using mult-tenant apporach to with single database and shared schema.
@@ -14,6 +14,9 @@ Welcome to bookstore multi-tenant app.
 
 ![alt text](https://github.com/M-Alzanati/BookStore/blob/master/service.PNG)
 
+
+* Every Enitiy Contains a tenant id to represent which tenant this record belongs
+* Add the TenantService as an extension method to IServiceCollection 
 
 License
 ----
