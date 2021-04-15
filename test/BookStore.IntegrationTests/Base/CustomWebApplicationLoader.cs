@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace BookStore.IntegrationTests
+namespace BookStore.IntegrationTests.Base
 {
     public class CustomWebApplicationLoader<T> : WebApplicationFactory<Startup>
     {
@@ -65,12 +65,12 @@ namespace BookStore.IntegrationTests
                     // Add ApplicationDbContext using an in-memory database for testing.
                     services.AddDbContext<AppDbContext>(options =>
                     {
-                        options.UseInMemoryDatabase("InMemoryDbForTesting");
+                        options.UseInMemoryDatabase(Constants.DBNAME);
                     });
 
                     services.AddDbContext<IdentityDbContext>(options =>
                     {
-                        options.UseInMemoryDatabase("InMemoryDbForTesting");
+                        options.UseInMemoryDatabase(Constants.DBNAME);
                     });
                 });
         }

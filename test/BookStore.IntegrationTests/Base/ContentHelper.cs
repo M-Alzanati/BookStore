@@ -2,7 +2,7 @@ using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace BookStore.IntegrationTests
+namespace BookStore.IntegrationTests.Base
 {
     public static class ContentHelper
     {

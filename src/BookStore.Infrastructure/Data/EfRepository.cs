@@ -41,9 +41,9 @@ namespace BookStore.Infrastructure.Data
             return _dbContext.Set<T>().Include(include).SingleOrDefaultAsync(predicate);
         }
 
-        public Task<List<T>> ListAsync<T>() where T : BaseEntity
+        public async Task<List<T>> ListAsync<T>() where T : BaseEntity
         {
-            return _dbContext.Set<T>().ToListAsync();
+            return await _dbContext.Set<T>().ToListAsync();
         }
 
         public async Task<T> AddAsync<T>(T entity) where T : BaseEntity

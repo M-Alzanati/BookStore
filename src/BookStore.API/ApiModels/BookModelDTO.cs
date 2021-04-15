@@ -18,6 +18,9 @@ namespace BookStore.API.ApiModels
         [Required(ErrorMessage = "Book Author Id Is Required")]
         public string AuthorId { set; get; }
 
+        [Required(ErrorMessage = "Category Id Is Required")]
+        public string CategoryId { set; get; }
+
         public double? AvgRating { set; get; }
 
         public static BookModelDTO FromBook(Book item)
@@ -28,6 +31,7 @@ namespace BookStore.API.ApiModels
                 Price = item.Price,
                 AuthorId = item.AuthorId,
                 Id = item.Id,
+                CategoryId = item.CategoryId,
                 AvgRating = item.GetAvgRating()
             };
         }
@@ -40,7 +44,8 @@ namespace BookStore.API.ApiModels
                 Name = book.Name,
                 Price = book.Price,
                 AuthorId = book.AuthorId,
-                Id = book.Id
+                Id = book.Id,
+                CategoryId = book.CategoryId
             }).ToList();
         }
 
@@ -51,7 +56,8 @@ namespace BookStore.API.ApiModels
                 Name = item.Name,
                 Price = item.Price,
                 AuthorId = item.AuthorId,
-                Id = item.Id
+                Id = item.Id,
+                CategoryId = item.CategoryId
             };
         }
     }
