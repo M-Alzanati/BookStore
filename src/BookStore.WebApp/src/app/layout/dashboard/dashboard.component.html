@@ -1,0 +1,21 @@
+<div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+    <mat-card style="width: 100%; text-align: left;">
+        <div fxFlex>
+            <app-stat [bgClass]="'success'" [icon]="'bookmark'" [label]="bookstore1" [content]="'BookStore 1 Is Great'"></app-stat>
+        </div>
+    </mat-card>
+    <mat-card style="width: 100%; text-align: left;">
+        <div fxFlex>
+            <app-stat [bgClass]="'danger'" [icon]="'bookmark'" [label]="bookstore2" [content]="'BookStore 2 Is Great'"></app-stat>
+            <br>
+        </div>
+    </mat-card>
+</div>
+
+<div class="mb-20" fxLayout>
+    <mat-card class="child-1" style="width: 55%; margin-right: 10px;">
+        <div fxFlex>
+            <app-stat [bgClass]="'info'" [icon]="'bookmark'" [content]="'Books'"></app-stat>
+        </div>
+    </mat-card>
+</div>
