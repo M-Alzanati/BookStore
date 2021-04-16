@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -14,9 +15,15 @@ namespace BookStore.IntegrationTests.Base
     {
         protected readonly HttpClient Client;
 
+        protected readonly IServiceProvider ServiceProvider;
+
+        protected readonly EfTestRepository Repository;
+
         public BaseTest(CustomWebApplicationLoader<Startup> factory)
         {
             Client = factory.CreateClient();
+            ServiceProvider = factory.Services;
+            Repository = new EfTestRepository(ServiceProvider);
         }
 
         public async Task SetToken()

@@ -7,5 +7,7 @@ namespace BookStore.IntegrationTests
         public const string EMAIL = "admin@gmail.com";
 
         public const string PASSWORD = "P@$$w0rd";
+
+        public const string TENANT_KEY = "tenantA";
     }
 }

@@ -2,33 +2,30 @@ using BookStore.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using BookStore.API;
+using System;
 
 namespace BookStore.IntegrationTests.Base
 {
-    public abstract class BaseEfRepoTestFixture
+    public abstract class BaseEfRepoTestFixture : IDisposable
     {
         protected AppDbContext _dbContext;
 
-        protected static DbContextOptions<AppDbContext> CreateNewContextOptions()
+        private readonly IServiceScope _serviceScope;
+
+        public BaseEfRepoTestFixture(IServiceProvider serviceProvider)
         {
-            var serviceProvider = new ServiceCollection()
-                .AddEntityFrameworkInMemoryDatabase()
-                .BuildServiceProvider();
-
-            var builder = new DbContextOptionsBuilder<AppDbContext>();
-            builder.UseInMemoryDatabase(Constants.DBNAME)
-                   .UseInternalServiceProvider(serviceProvider);
-
-            SeedData.Initialize(serviceProvider);
-            return builder.Options;
+            _serviceScope = serviceProvider.CreateScope();
+            _dbContext = _serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
         }
 
         protected EfRepository GetRepository()
         {
-            var options = CreateNewContextOptions();
-            _dbContext = new AppDbContext(options);
-
             return new EfRepository(_dbContext);
+        }
+
+        public void Dispose()
+        {
+            _serviceScope?.Dispose();
         }
     }
 }

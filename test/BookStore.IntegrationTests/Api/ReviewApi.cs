@@ -12,20 +12,25 @@ namespace BookStore.IntegrationTests.Api
     {
         private readonly HttpClient _context;
 
-        public ReviewApi(CustomWebApplicationLoader<Startup> factory) : base(factory)
+        public ReviewApi(CustomWebApplicationLoader<Startup> factory)
+            : base(factory)
         {
-            _context = factory.CreateClient();
+
         }
 
         [Fact]
         public async Task CanAddNewReivew()
         {
+            // arrange
             await SetToken();
 
-            var model = new ReviewModelDTO();
+            var book = await Repository.GetBook();
+            var model = new ReviewModelDTO() { Rating = 4, BookId = book.Id, Text = "Great Book" };
+
+            // act
             var response = await Client.PostAsync("/reviews/add", ContentHelper.GetStringContent(model));
 
-            Assert.NotNull(response.StatusCode);
+            // assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
