@@ -28,7 +28,7 @@ namespace BookStore.IntegrationTests.Api
             var model = new ReviewModelDTO() { Rating = 4, BookId = book.Id, Text = "Great Book" };
 
             // act
-            var response = await Client.PostAsync("/reviews/add", ContentHelper.GetStringContent(model));
+            var response = await Client.PostAsync($"/reviews/add?TenantKey={Constants.TENANT_KEY}", ContentHelper.GetStringContent(model));
 
             // assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
