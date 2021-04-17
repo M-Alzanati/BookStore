@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
                 (myTenants: TenantModel[]) => {
                     myTenants.forEach((v) => {
                         this.tenants.push(v);
-                        this.dashboradService.TenantModels[v.name] = v.apiKey;
+                        this.dashboradService.TenantModels[v.apiKey] = v.name;
                     });
                 },
                 (error) => {

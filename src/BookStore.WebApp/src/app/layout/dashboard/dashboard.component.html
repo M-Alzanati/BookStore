@@ -1,4 +1,4 @@
-<mat-card style="background-color: oldlace;">
+<mat-card style="background-color: snow;">
     <mat-card-title>
         All BookStores
     </mat-card-title>
@@ -10,7 +10,10 @@
                         <app-stat [bgClass]="'info'" [icon]="'bookmark'" [label]="item.name">
                         </app-stat>
                         <br>
-                        <button mat-raised-button color="primary" style="font-size: large;">Details</button>
+                        <a mat-raised-button [routerLink]="['bookstore-details']" [queryParams]="{apiKey: item.apiKey}"
+                            color="primary" style="font-size: large;">
+                            Details
+                        </a>
                     </div>
                 </mat-card>
             </div>

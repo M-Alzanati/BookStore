@@ -9,6 +9,8 @@ import { LayoutComponent } from './layout.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { StatModule } from '../shared/modules/stat/stat.module';
 import { MessageBoxComponent } from './components/message-dialog/message-dialog-component';
+import { BookstoreDetailsComponent } from './components/bookstore-details/bookstore-details.component';
+import { BookStoreDetailService } from './components/bookstore-details/bookstore.details.service';
 
 @NgModule({
     imports: [
@@ -23,8 +25,11 @@ import { MessageBoxComponent } from './components/message-dialog/message-dialog-
         LayoutComponent,
         TopnavComponent,
         SidebarComponent,
-        MessageBoxComponent
+        MessageBoxComponent,
+        BookstoreDetailsComponent
+    ],
+    providers: [
+        BookStoreDetailService
     ]
-
 })
 export class LayoutModule { }
