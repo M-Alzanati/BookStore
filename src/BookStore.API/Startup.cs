@@ -1,19 +1,12 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using BookStore.Infrastructure;
 using Autofac;
-using Microsoft.AspNetCore.Http;
 using BookStore.API.Middlewares;
 
 namespace BookStore.API
@@ -24,6 +17,8 @@ namespace BookStore.API
     /// </summary>
     public class Startup
     {
+        private const string CorsPolicy = "CorsPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -70,6 +65,16 @@ namespace BookStore.API
                     }
                 });
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    CorsPolicy,
+                    builder => builder.WithOrigins(Configuration["WebApp:url"])
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -89,6 +94,8 @@ namespace BookStore.API
             app.UseRequestResponseLogging();
 
             app.UseHttpsRedirection();
+
+            app.UseCors(CorsPolicy);
 
             app.UseRouting();
 

@@ -5,17 +5,15 @@ import { AuthenticationService } from 'src/app/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogData, MessageBoxComponent } from '../components/message-dialog/message-dialog-component';
 
-export interface PeriodicElement {
-    name: string;
-    time: string;
-}
-
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+    bookstore1: string = 'BookStore 1';
+    bookstore2: string = 'BookStore 2';
 
     constructor(private auth: AuthenticationService, private dialog: MatDialog) {
 

@@ -15,25 +15,32 @@ using Microsoft.Extensions.Logging;
 
 namespace BookStore.API.Controllers
 {
-    [AllowAnonymous]
     [Route("auth")]
     public class AuthenticateController : BaseApiController
     {
+        private readonly ILogger<AuthenticateController> _logger;
+
         private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly IConfiguration _configuration;
 
-        private readonly ILogger<AuthenticateController> _logger;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AuthenticateController(ILogger<AuthenticateController> logger, UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        public AuthenticateController(
+            ILogger<AuthenticateController> logger, 
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
             _logger = logger;
+            _signInManager = signInManager;
         }
 
         [HttpPost]
         [Route("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginModelDTO model)
         {
             if (ModelState.IsValid)
@@ -72,6 +79,7 @@ namespace BookStore.API.Controllers
 
         [HttpPost]
         [Route("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterModelDTO model)
         {
             if (ModelState.IsValid)
@@ -94,6 +102,25 @@ namespace BookStore.API.Controllers
             }
 
             return BadRequest(ModelState);
+        }
+
+        [Authorize]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticated()
+        {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return Ok("true");
+            }
+            return BadRequest();
+        }
+
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok("true");
         }
     }
 }

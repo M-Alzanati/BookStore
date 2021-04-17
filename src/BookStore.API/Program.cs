@@ -20,13 +20,12 @@ namespace BookStore.API
                 try
                 {
                     var appContext = services.GetRequiredService<AppDbContext>();
-                    appContext.Database.EnsureCreated();    // check if db is created
-                    appContext.Database.Migrate();  // run pending migrations
-                    SeedData.Initialize(services);  // seed data
+                    appContext.Database.Migrate();    // check if db is created
 
                     var IdentityContext = services.GetRequiredService<IdentityDbContext>();
-                    IdentityContext.Database.EnsureCreated();   // check if db is created
-                    IdentityContext.Database.Migrate(); // run pending migrations
+                    IdentityContext.Database.Migrate();   // check if db is created
+                    
+                    SeedData.Initialize(services);  // seed data
                 }
                 catch (Exception ex)
                 {
