@@ -8,6 +8,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { MaterialModule } from 'src/app/shared/modules/material/material.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { DashBoardService } from './dashboard.service';
 
 @NgModule({
     imports: [
@@ -20,6 +21,9 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
         FlexLayoutModule.withConfig({ addFlexToParent: false }),
         NgxMaterialTimepickerModule,
         MatDialogModule
+    ],
+    providers: [
+        DashBoardService
     ],
     declarations: [DashboardComponent]
 })

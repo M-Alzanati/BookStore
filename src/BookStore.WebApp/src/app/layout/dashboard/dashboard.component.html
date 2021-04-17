@@ -1,15 +1,13 @@
-<div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
-    <mat-card style="width: 100%; text-align: left;">
-        <div fxFlex>
-            <app-stat [bgClass]="'success'" [icon]="'bookmark'" [label]="bookstore1" [content]="'BookStore 1 Is Great'"></app-stat>
-        </div>
-    </mat-card>
-    <mat-card style="width: 100%; text-align: left;">
-        <div fxFlex>
-            <app-stat [bgClass]="'danger'" [icon]="'bookmark'" [label]="bookstore2" [content]="'BookStore 2 Is Great'"></app-stat>
-            <br>
-        </div>
-    </mat-card>
+<div class="mb-20" fxLayout fxLayoutGap="100px">
+    <div *ngFor="let item of tenants">
+        <mat-card style="width: 100%; text-align: left;">
+            <div>
+                <app-stat [bgClass]="'success'" [icon]="'bookmark'" [label]="item.name">
+
+                </app-stat>
+            </div>
+        </mat-card>
+    </div>
 </div>
 
 <div class="mb-20" fxLayout>

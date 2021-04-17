@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AuthenticationService } from 'src/app/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogData, MessageBoxComponent } from '../components/message-dialog/message-dialog-component';
+import { DashBoardService } from './dashboard.service';
+import { TenantModel } from '../models/tenant-model';
 
 @Component({
     selector: 'app-dashboard',
@@ -12,18 +14,26 @@ import { DialogData, MessageBoxComponent } from '../components/message-dialog/me
 })
 export class DashboardComponent implements OnInit {
 
-    bookstore1: string = 'BookStore 1';
-    bookstore2: string = 'BookStore 2';
+    tenants: TenantModel[] = [];
 
-    constructor(private auth: AuthenticationService, private dialog: MatDialog) {
+    constructor(private dashboradService: DashBoardService, private dialog: MatDialog) {
 
     }
 
     ngOnInit() {
-
-    }
-
-    onFormSubmit() {
-
+        this.dashboradService
+            .getTenants()
+            .subscribe(
+                (myTenants: TenantModel[]) => {
+                    myTenants.forEach((v) => {
+                        this.tenants.push(v);
+                        this.dashboradService.TenantModels[v.name] = v.apiKey;
+                    });
+                },
+                (error) => {
+                    let msg: DialogData = { title: 'Error', content: error };
+                    this.dialog.open(MessageBoxComponent, {data: msg});
+                }
+            );
     }
 }

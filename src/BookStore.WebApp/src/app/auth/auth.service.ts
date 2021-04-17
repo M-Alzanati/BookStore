@@ -16,21 +16,6 @@ export class AuthenticationService extends BaseService {
         super();
     }
 
-    register(model: LoginModel): Observable<boolean> {
-        return this.http.post(`${this.url}/auth/register`, model, this.httpOptions).pipe(
-            map(response => {
-                if (response) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }),
-            catchError(e => {
-                this.authenticated = false;
-                return of(false);
-            }));
-    }
-
     login(model: LoginModel): Observable<boolean> {
         return this.http.post(`${this.url}/auth/login`, model, this.httpOptions).pipe(
             map((response: any) => {

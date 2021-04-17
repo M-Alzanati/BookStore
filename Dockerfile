@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS build-env
-WORKDIR /src
+WORKDIR ./src
 
 
 COPY *.csproj ./
