@@ -32,12 +32,17 @@ namespace BookStore.Infrastructure.Services
                 return this._tenants.Default;
             }
 
-            if (this._tenants.Tenants.TryGetValue(tenant, out var mappedTenant))
+            if (this._tenants.Tenants.TryGetValue(tenant, out var mappedTenantDate))
             {
-                return mappedTenant;
+                var tenantExpirationDate = DateTime.Parse(mappedTenantDate);
+                if (DateTime.Now > tenantExpirationDate) {
+                    return null;
+                }
+
+                return tenant;
             }
 
-            return tenant;
+            return null;
         }
     }
 }
