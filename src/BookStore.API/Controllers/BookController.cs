@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +15,12 @@ namespace BookStore.API.Controllers
     [Route("Books")]
     public class BookController : BaseApiController
     {
-        private readonly ILogger<BookController> _logger;
-
         private readonly IRepository _repository;
 
         private readonly ITenantService _tenantService;
 
-        public BookController(ILogger<BookController> logger, IRepository repository, ITenantService tenantService)
+        public BookController(IRepository repository, ITenantService tenantService)
         {
-            _logger = logger;
             _repository = repository;
             _tenantService = tenantService;
         }
