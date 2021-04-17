@@ -46,7 +46,7 @@ export class TopnavComponent implements OnInit {
         this.auth.logout().subscribe(
             res => {
                 if (res) {
-                    this.router.navigate(['/login']);
+                    this.router.navigate(['/admin/login']);
                 }
             });
     }

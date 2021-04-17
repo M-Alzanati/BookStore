@@ -12,7 +12,7 @@ export class AuthenticationService extends BaseService {
     authenticated: boolean = false;
     name: string;
 
-    constructor(private router: Router, private http: HttpClient) {
+    constructor(private http: HttpClient) {
         super();
     }
 
@@ -22,7 +22,6 @@ export class AuthenticationService extends BaseService {
                 if (response && response.token) {
                     this.authenticated = true;
                     localStorage.setItem('token', response.token);
-                    localStorage.setItem('fullName', response.fullName);
                     localStorage.setItem('email', model.Email);
                     localStorage.setItem('uuid', response.id);
                 }
@@ -38,9 +37,7 @@ export class AuthenticationService extends BaseService {
         return this.http.post(`${this.url}/auth/logout`, null, this.httpOptions).pipe(
             map(response => {
                 if (response) {
-                    var now = new Date();
                     localStorage.removeItem('token');
-                    localStorage.removeItem('fullName');
                     localStorage.removeItem('email');
                     localStorage.removeItem('uuid');
                     return true;

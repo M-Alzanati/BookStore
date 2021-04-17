@@ -45,6 +45,20 @@ namespace BookStore.API.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation(
+            Summary = "Get all authors in tenant",
+            OperationId = "authors")
+        ]
+        public async Task<IActionResult> GetAuthors()
+        {
+            var tenantId = await _tenantService.GetTenantIdAsync();
+            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
+
+            var authors = (await _repository.ListAsync<Author>()).Select(AuthorModelDTO.FromAuthor);
+            return (Ok(authors));
+        }
+
+        [HttpGet]
         [Route("nationalites")]
         [SwaggerOperation(
             Summary = "Get nationalities per tenant",

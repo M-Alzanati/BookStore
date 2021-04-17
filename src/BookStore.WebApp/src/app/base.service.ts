@@ -5,9 +5,9 @@ import { TenantModel } from "./layout/models/tenant-model";
 export class BaseService {
 
     url: string = environment.apiUrl;
-    
+
     TenantModels = {};
-    
+
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'

@@ -28,7 +28,7 @@
               "src/favicon.ico"
             ],
             "styles": [
-                "src/styles/styles.scss"
+              "src/styles/styles.scss"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js"
@@ -93,7 +93,7 @@
               "node_modules/chart.js/dist/Chart.js"
             ],
             "styles": [
-                "styles.scss"
+              "styles.scss"
             ],
             "assets": [
               "src/assets",
@@ -137,12 +137,15 @@
           "options": {
             "tsConfig": "e2e/tsconfig.e2e.json",
             "exclude": [
-                "**/node_modules/**"
+              "**/node_modules/**"
             ]
           }
         }
       }
     }
   },
-  "defaultProject": "ng-material"
+  "defaultProject": "ng-material",
+  "cli": {
+    "analytics": false
+  }
 }
