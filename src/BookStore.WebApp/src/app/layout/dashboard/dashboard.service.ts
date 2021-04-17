@@ -23,4 +23,19 @@ export class DashBoardService extends BaseService {
                 })
             );
     }
+
+    getBooksCountPerTenant(tenantKey: string): Observable<Number> {
+        let url = `${this.url}/tenants/books/count?TenantKey=${tenantKey}`;
+        debugger;
+        return this.http
+            .get(url, this.httpOptions)
+            .pipe(
+                map(response => {
+                    return response;
+                }),
+                catchError(e => {
+                    return of(null);
+                })
+            );
+    }
 }

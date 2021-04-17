@@ -7,7 +7,7 @@ namespace BookStore.API.ApiModels
         public string Name { set; get; }
 
         public string ApiKey { set; get; }
-
+        
         public static TenantModelDTO FromTenant(Tenant item)
         {
             return new TenantModelDTO

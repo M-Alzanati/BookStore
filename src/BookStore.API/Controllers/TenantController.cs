@@ -6,6 +6,7 @@ using BookStore.API.ApiModels;
 using BookStore.SharedKernel.Interfaces;
 using BookStore.Core.Interfaces;
 using BookStore.Core.Entities;
+using Microsoft.Extensions.Configuration;
 
 namespace BookStore.API.Controllers
 {
@@ -15,15 +16,31 @@ namespace BookStore.API.Controllers
     {
         private readonly IRepository _repo;
 
-        public TenantController(IRepository repository)
+        private readonly ITenantService _tenantService;
+
+        public TenantController(IRepository repository, ITenantService tenantService)
         {
             _repo = repository;
+            _tenantService = tenantService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetTenants()
         {
-            return (Ok((await _repo.ListAsync<Tenant>()).Select(TenantModelDTO.FromTenant)));
+            return (
+                Ok((await _repo.ListAsync<Tenant>()).Select(TenantModelDTO.FromTenant))
+            );
+        }
+
+        [HttpGet]
+        [Route("books/count")]
+        public async Task<IActionResult> GetBooksCountPerTenant()
+        {
+            var tenantId = await _tenantService.GetTenantIdAsync();
+            return (
+                    Ok((await _repo.ListAsync<Book>(b => b.TenantId == tenantId
+                )).Count)
+            );
         }
     }
 }

@@ -29,7 +29,7 @@ export class UserRequestInterceptor implements HttpInterceptor {
 
     private handleAuthError(err: HttpErrorResponse): Observable<any> {
         if (err.status === 401 || err.status === 403) {
-            this.router.navigateByUrl(`/login`);
+            this.router.navigateByUrl(`/admin/login`);
             return of(err.message);
         }
         return throwError(err);
