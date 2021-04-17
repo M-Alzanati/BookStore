@@ -27,14 +27,12 @@ namespace BookStore.API.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AuthenticateController(
-            ILogger<AuthenticateController> logger, 
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
-            _logger = logger;
             _signInManager = signInManager;
         }
 

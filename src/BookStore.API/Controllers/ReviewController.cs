@@ -14,15 +14,12 @@ namespace BookStore.API.Controllers
     [Route("reviews")]
     public class ReviewController : BaseApiController
     {
-        private readonly ILogger<ReviewController> _logger;
-
         private readonly IRepository _repository;
 
         private readonly ITenantService _tenantService;
 
-        public ReviewController(ILogger<ReviewController> logger, IRepository repository, ITenantService tenantService)
+        public ReviewController(IRepository repository, ITenantService tenantService)
         {
-            _logger = logger;
             _repository = repository;
             _tenantService = tenantService;
         }
