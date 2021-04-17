@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
                 },
                 (error) => {
                     let msg: DialogData = { title: 'Error', content: error };
-                    this.dialog.open(MessageBoxComponent, {data: msg});
+                    this.dialog.open(MessageBoxComponent, { data: msg });
                 }
             );
     }

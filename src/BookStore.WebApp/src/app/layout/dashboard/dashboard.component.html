@@ -1,19 +1,19 @@
-<div class="mb-20" fxLayout fxLayoutGap="100px">
-    <div *ngFor="let item of tenants">
-        <mat-card style="width: 100%; text-align: left;">
-            <div>
-                <app-stat [bgClass]="'success'" [icon]="'bookmark'" [label]="item.name">
-
-                </app-stat>
+<mat-card style="background-color: oldlace;">
+    <mat-card-title>
+        All BookStores
+    </mat-card-title>
+    <mat-card-content>
+        <div class="mb-20" fxLayout="row wrap" fxLayoutGap="70px">
+            <div *ngFor="let item of tenants">
+                <mat-card style="width: 100%; text-align: left; margin-top: 10px;">
+                    <div>
+                        <app-stat [bgClass]="'info'" [icon]="'bookmark'" [label]="item.name">
+                        </app-stat>
+                        <br>
+                        <button mat-raised-button color="primary" style="font-size: large;">Details</button>
+                    </div>
+                </mat-card>
             </div>
-        </mat-card>
-    </div>
-</div>
-
-<div class="mb-20" fxLayout>
-    <mat-card class="child-1" style="width: 55%; margin-right: 10px;">
-        <div fxFlex>
-            <app-stat [bgClass]="'info'" [icon]="'bookmark'" [content]="'Books'"></app-stat>
         </div>
-    </mat-card>
-</div>
+    </mat-card-content>
+</mat-card>
