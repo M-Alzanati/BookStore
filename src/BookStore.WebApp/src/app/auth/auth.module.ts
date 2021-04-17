@@ -7,7 +7,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { MaterialModule } from '../shared/modules/material/material.module';
 import { AuthenticationService } from './auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RegisterComponent } from './register/register.component';
 
 @NgModule({
     imports: [
@@ -17,6 +16,6 @@ import { RegisterComponent } from './register/register.component';
         ReactiveFormsModule,
         FlexLayoutModule.withConfig({ addFlexToParent: false })
     ],
-    declarations: [LoginComponent, RegisterComponent]
+    declarations: [LoginComponent]
 })
 export class AuthModule { }
