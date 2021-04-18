@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../auth.service';
 import { LoginModel } from '../models/login-model';
 import { FormGroup, FormControl } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
         password: new FormControl('')
     });
 
-    constructor(private router: Router, private auth: AuthenticationService) {
+    constructor(private router: Router, private auth: AuthenticationService, private spinner: NgxSpinnerService) {
 
     }
 
@@ -29,11 +30,19 @@ export class LoginComponent implements OnInit {
             Password: this.userForm.get('password').value
         };
 
-        this.auth.login(model).subscribe(
-            res => {
-                if (res) {
-                    this.router.navigate(['/app/dashboard']);
+        this.spinner.show();
+
+        this.auth.login(model)
+            .subscribe(
+                res => {
+                    this.spinner.hide();
+                    if (res) {
+                        this.router.navigate(['/app/dashboard']);
+                    }
+                },
+                err => {
+                    this.spinner.hide();
                 }
-            });
+            );
     }
 }

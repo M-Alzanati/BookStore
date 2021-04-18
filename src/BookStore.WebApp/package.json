@@ -31,6 +31,7 @@
         "core-js": "3.6.5",
         "ng2-charts": "2.3.0",
         "ngx-material-timepicker": "^5.5.3",
+        "ngx-spinner": "^9.0.1",
         "rxjs": "6.5.5",
         "web-animations-js": "^2.3.2",
         "zone.js": "~0.10.3"
