@@ -16,7 +16,10 @@ export class LoginComponent implements OnInit {
         password: new FormControl('')
     });
 
-    constructor(private router: Router, private auth: AuthenticationService, private spinner: NgxSpinnerService) {
+    constructor(
+        private router: Router,
+        private auth: AuthenticationService,
+        private spinner: NgxSpinnerService) {
 
     }
 

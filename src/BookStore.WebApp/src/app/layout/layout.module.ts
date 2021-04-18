@@ -11,7 +11,8 @@ import { StatModule } from '../shared/modules/stat/stat.module';
 import { MessageBoxComponent } from './components/message-dialog/message-dialog-component';
 import { BookstoreDetailsComponent } from './components/bookstore-details/bookstore-details.component';
 import { BookStoreDetailService } from './components/bookstore-details/bookstore.details.service';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     imports: [
@@ -20,8 +21,9 @@ import { NgxSpinnerModule } from "ngx-spinner";
         MaterialModule,
         TranslateModule,
         MatDatepickerModule,
+        ReactiveFormsModule,
         StatModule,
-        NgxSpinnerModule
+        FlexLayoutModule.withConfig({ addFlexToParent: false }),
     ],
     declarations: [
         LayoutComponent,

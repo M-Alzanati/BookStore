@@ -3,18 +3,16 @@
         All BookStores
     </mat-card-title>
     <mat-card-content>
-        <div class="mb-20" fxLayout="row wrap" fxLayoutGap="70px">
-            <div *ngFor="let item of tenants">
-                <mat-card style="width: 100%; text-align: left; margin-top: 10px;">
-                    <div>
-                        <app-stat [bgClass]="'info'" [icon]="'bookmark'" [label]="item.name">
-                        </app-stat>
-                        <br>
-                        <a mat-raised-button [routerLink]="['bookstore-details']" [queryParams]="{apiKey: item.apiKey}"
-                            color="primary" style="font-size: large;">
-                            Details
-                        </a>
-                    </div>
+        <div fxLayout="row" fxLayoutGap="30px">
+            <div *ngFor="let item of tenants;let i = index">
+                <mat-card [ngClass]="('child-' + (i + 1))">
+                    <app-stat [bgClass]="'info'" [icon]="'bookmark'" [label]="item.name">
+                    </app-stat>
+                    <br>
+                    <a mat-raised-button [routerLink]="['bookstore-details']" [queryParams]="{apiKey: item.apiKey}"
+                        color="primary" style="font-size: large;">
+                        Details
+                    </a>
                 </mat-card>
             </div>
         </div>

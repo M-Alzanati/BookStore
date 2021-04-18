@@ -7,7 +7,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { MaterialModule } from '../shared/modules/material/material.module';
 import { AuthenticationService } from './auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
     imports: [
@@ -16,7 +15,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         MaterialModule,
         ReactiveFormsModule,
         FlexLayoutModule.withConfig({ addFlexToParent: false }),
-        NgxSpinnerModule
+
     ],
     declarations: [LoginComponent],
     schemas: [

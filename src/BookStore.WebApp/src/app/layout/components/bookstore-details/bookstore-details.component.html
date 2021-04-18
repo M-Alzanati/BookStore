@@ -1,8 +1,116 @@
 <mat-card>
     <mat-card-title>
-        BookStore Details
+        {{title}}
     </mat-card-title>
     <mat-card-content>
-
+        <div fxLayout="row" fxLayoutGap="100px">
+            <mat-card style="background-color: aliceblue; width: 40%;" class="child-1">
+                <form fxFlex [formGroup]="addBookForm" (ngSubmit)="onAddBookFormSubmit()">
+                    <div class="text-center">
+                        <h2 class="app-name">Add New Book</h2>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="30px">
+                        <div class="child-1">
+                            <mat-form-field>
+                                <input matInput placeholder="Book Name" formControlName="name" type="text">
+                            </mat-form-field>
+                        </div>
+                        <div class="child-2">
+                            <mat-form-field>
+                                <input matInput type="number" placeholder="Book Price" formControlName="price">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="30px">
+                        <div class="child-1">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Select Category</mat-label>
+                                <mat-select formControlName="categorgyId">
+                                    <mat-option *ngFor="let c of categories" [value]="c.id">
+                                        {{c.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="child-2">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Select Author</mat-label>
+                                <mat-select formControlName="authorId">
+                                    <mat-option *ngFor="let a of authors" [value]="a.id">
+                                        {{a.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <br>
+                    <div fxFlex fxLayout="row">
+                        <div fxFlexFill fxLayoutAlign="center">
+                            <button mat-raised-button color="primary" class="w-100" type="submit">Add Book</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card>
+            <mat-card style="background-color: aliceblue; width: 40%;" class="child-2">
+                <form fxFlex [formGroup]="addReviewForm" (ngSubmit)="onAddReviewFormSubmit()">
+                    <div class="text-center">
+                        <h2 class="app-name">Add Book Review</h2>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="30px">
+                        <div class="child-1">
+                            <mat-form-field>
+                                <input matInput placeholder="Book Name" formControlName="bookName" type="text">
+                            </mat-form-field>
+                        </div>
+                        <div class="child-2">
+                            <mat-form-field>
+                                <input matInput type="number" placeholder="Book rating" formControlName="rating">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxlayout="row">
+                        <mat-form-field>
+                            <input matInput placeholder="Book review" formControlName="text" type="text">
+                        </mat-form-field>
+                    </div>
+                    <br>
+                    <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+                        <div fxFlexFill fxLayoutAlign="center">
+                            <button mat-raised-button color="primary" class="w-100" type="submit">Add Review</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card>
+        </div>
+        <br>
+        <div fxLayout="row">
+            <mat-card style="background-color: aliceblue; width: 60%;" class="child-1">
+                <form fxFlex [formGroup]="addBookForm" (ngSubmit)="onAddReviewFormSubmit()">
+                    <div class="text-center">
+                        <h2 class="app-name">Get Book Details</h2>
+                    </div>
+                    <div fxFlex fxlayout="row" fxlayout.lt-md="column">
+                        <div fxFlexFill>
+                            <mat-form-field class="w-100">
+                                <input matInput placeholder="Book Name" formControlName="name" type="text">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+                        <div fxFlexFill>
+                            <mat-form-field class="w-100">
+                                <input matInput type="number" placeholder="Book Price" formControlName="price">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <br>
+                    <div fxFlex fxLayout="row" fxLayout.lt-md="column">
+                        <div fxFlexFill fxLayoutAlign="center">
+                            <button mat-raised-button color="primary" class="w-100" type="submit">AddBook</button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card>
+        </div>
     </mat-card-content>
 </mat-card>

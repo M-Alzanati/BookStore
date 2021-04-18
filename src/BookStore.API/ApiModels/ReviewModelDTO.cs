@@ -11,8 +11,8 @@ namespace BookStore.API.ApiModels
         [Required(ErrorMessage = "Review Rating Is Required"), Range(1, 5)]
         public byte Rating { set; get; }
 
-        [Required(ErrorMessage = "Book Id Is Required")]
-        public string BookId { set; get; }
+        [Required(ErrorMessage = "Book Name Is Required")]
+        public string BookName { set; get; }
 
         public static ReviewModelDTO FromReview(Review item)
         {
@@ -20,7 +20,7 @@ namespace BookStore.API.ApiModels
             {
                 Text = item.Text,
                 Rating = item.Rating,
-                BookId = item.BookId
+                BookName = item.Book.Name
             };
         }
 
@@ -30,7 +30,6 @@ namespace BookStore.API.ApiModels
             {
                 Text = item.Text,
                 Rating = item.Rating,
-                BookId = item.BookId
             };
         }
     }

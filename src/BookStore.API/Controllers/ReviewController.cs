@@ -40,6 +40,10 @@ namespace BookStore.API.Controllers
             var myReview = ReviewModelDTO.FromReviewDTO(review);
             myReview.TenantId = tenantId;
 
+            var book = await _repository.GetByIdAsync<Book>(r => r.Name == review.BookName);
+            if (book == null) return BadRequest($"Can't find book {review.BookName}");
+
+            myReview.BookId = book.Id;
             var addedReview = await _repository.AddAsync<Review>(myReview);
             return (Ok(ReviewModelDTO.FromReview(addedReview)));
         }

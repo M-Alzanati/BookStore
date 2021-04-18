@@ -11,11 +11,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserRequestInterceptor } from './auth/UserRequestInterceptor';
 import { AuthenticationService } from './auth/auth.service';
+import { SharedService } from './shared/services/shared.service';
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -42,7 +44,8 @@ export const createTranslateLoader = (http: HttpClient) => {
                 useFactory: createTranslateLoader,
                 deps: [HttpClient]
             }
-        })
+        }),
+        NgxSpinnerModule,
     ],
     providers: [
         AuthenticationService,
@@ -54,4 +57,4 @@ export const createTranslateLoader = (http: HttpClient) => {
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
