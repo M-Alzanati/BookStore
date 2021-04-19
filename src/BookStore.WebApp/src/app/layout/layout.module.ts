@@ -13,6 +13,7 @@ import { BookstoreDetailsComponent } from './components/bookstore-details/bookst
 import { BookStoreDetailService } from './components/bookstore-details/bookstore.details.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         TranslateModule,
         MatDatepickerModule,
         ReactiveFormsModule,
+        MatTableModule,
         StatModule,
         FlexLayoutModule.withConfig({ addFlexToParent: false }),
     ],

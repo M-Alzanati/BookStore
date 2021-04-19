@@ -77,45 +77,66 @@
             </app-stat>
         </div>
         <br>
-        <div fxLayout="row">
-            <app-stat [bgClass]="'details'" [icon]="'bookmark'" [label]="'Book Details'" style="width: 45%;">
-                <form fxFlex [formGroup]="getBookDetailsForm" (ngSubmit)="onGetBookDetails()" style="color: black;">
-                    <div fxLayout="row" fxLayoutGap="50px">
-                        <div class="child-1">
-                            <div fxLayout="column" fxLayoutGap="15px">
-                                <div class="child-1">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Book Name" formControlName="bookName" type="text">
-                                    </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="100px">
+            <div class="child-1" style="width: 45%;">
+                <app-stat [bgClass]="'details'" [icon]="'bookmark'" [label]="'Book Details'">
+                    <form fxFlex [formGroup]="getBookDetailsForm" (ngSubmit)="onGetBookDetails()" style="color: black;">
+                        <div fxLayout="row" fxLayoutGap="50px">
+                            <div class="child-1">
+                                <div fxLayout="column" fxLayoutGap="15px">
+                                    <div class="child-1">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Book Name" formControlName="bookName"
+                                                type="text">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="child-2" fxLayoutAlign="left">
+                                    <button mat-raised-button color="primary" type="submit">
+                                        Get Book Details</button>
                                 </div>
                             </div>
-                            <div class="child-2" fxLayoutAlign="left">
-                                <button mat-raised-button color="primary" type="submit">
-                                    Get Book Details</button>
+                            <div class="child-1">
+                                <div fxLayout="column" fxLayoutGap="15px">
+                                    <div class="child-1">
+                                        <h3>Book Name: {{bookModel?.name}}</h3>
+                                    </div>
+                                    <div class="child-2">
+                                        <h3>Book Price: {{bookModel?.price}}</h3>
+                                    </div>
+                                    <div class="child-3">
+                                        <h3>Book Author: {{bookModel?.authorId}}</h3>
+                                    </div>
+                                    <div class="child-4">
+                                        <h3>Book Category: {{bookModel?.categoryId}}</h3>
+                                    </div>
+                                    <div class="child-4">
+                                        <h3>Book Rating: {{bookModel?.avgRating}}</h3>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="child-1">
-                            <div fxLayout="column" fxLayoutGap="15px">
-                                <div class="child-1">
-                                    <h3>Book Name: {{bookModel?.name}}</h3>
-                                </div>
-                                <div class="child-2">
-                                    <h3>Book Price: {{bookModel?.price}}</h3>
-                                </div>
-                                <div class="child-3">
-                                    <h3>Book Author: {{bookModel?.authorId}}</h3>
-                                </div>
-                                <div class="child-4">
-                                    <h3>Book Category: {{bookModel?.categoryId}}</h3>
-                                </div>
-                                <div class="child-4">
-                                    <h3>Book Rating: {{bookModel?.avgRating}}</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </app-stat>
+                    </form>
+                </app-stat>
+            </div>
+            <div class="child-2" style="width: 55%;">
+                <app-stat [bgClass]="'success2'" [icon]="'bookmark'" [label]="'Authors'">
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="bookName">
+                            <th mat-header-cell *matHeaderCellDef> Book Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.bookName}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </app-stat>
+            </div>
         </div>
     </mat-card-content>
 </mat-card>

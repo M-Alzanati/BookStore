@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SharedService } from 'src/app/shared/services';
@@ -24,6 +25,8 @@ export class BookstoreDetailsComponent implements OnInit {
   authors: AuthorModel[];
   apiKey: string;
   title: string;
+  dataSource: MatTableDataSource<AuthorModel>;
+  displayedColumns: string[] = ['name', 'bookName'];
 
   addBookForm: FormGroup = new FormGroup({
     name: new FormControl(''),
@@ -73,6 +76,19 @@ export class BookstoreDetailsComponent implements OnInit {
         (res) => {
           this.spinner.hide();
           this.authors = res;
+        },
+        (err) => {
+          this.spinner.hide();
+          this.dialog.open(MessageBoxComponent, { data: err });
+        }
+      );
+
+    this.spinner.show()
+    this.bookstoreService
+      .getAuthors(this.apiKey)
+      .subscribe(
+        (res: AuthorModel[]) => {
+          this.dataSource = new MatTableDataSource(res);
         },
         (err) => {
           this.spinner.hide();
