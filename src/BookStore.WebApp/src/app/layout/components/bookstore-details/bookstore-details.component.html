@@ -51,7 +51,7 @@
                     </div>
                 </form>
             </mat-card>
-            <mat-card style="background-color: aliceblue; width: 40%;" class="child-2">
+            <mat-card style="background-color: cornsilk; width: 40%;" class="child-2">
                 <form fxFlex [formGroup]="addReviewForm" (ngSubmit)="onAddReviewFormSubmit()">
                     <div class="text-center">
                         <h2 class="app-name">Add Book Review</h2>
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div fxlayout="row">
-                        <mat-form-field>
+                        <mat-form-field style="width: -webkit-fill-available;">
                             <input matInput placeholder="Book review" formControlName="text" type="text">
                         </mat-form-field>
                     </div>
@@ -84,32 +84,49 @@
         </div>
         <br>
         <div fxLayout="row">
-            <mat-card style="background-color: aliceblue; width: 60%;" class="child-1">
-                <form fxFlex [formGroup]="addBookForm" (ngSubmit)="onAddReviewFormSubmit()">
-                    <div class="text-center">
-                        <h2 class="app-name">Get Book Details</h2>
-                    </div>
-                    <div fxFlex fxlayout="row" fxlayout.lt-md="column">
-                        <div fxFlexFill>
-                            <mat-form-field class="w-100">
-                                <input matInput placeholder="Book Name" formControlName="name" type="text">
-                            </mat-form-field>
+            <mat-card style="background-color: lightblue; width: 45%;" class="child-1">
+                <mat-card-title>
+                    Book Details
+                </mat-card-title>
+                <mat-card-content>
+                    <form fxFlex [formGroup]="getBookDetailsForm" (ngSubmit)="onGetBookDetails()">
+                        <div fxLayout="row" fxLayoutGap="50px">
+                            <div class="child-1">
+                                <div fxLayout="column" fxLayoutGap="15px">
+                                    <div class="child-1">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Book Name" formControlName="bookName"
+                                                type="text">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="child-2" fxLayoutAlign="left">
+                                    <button mat-raised-button color="primary" type="submit">
+                                        Get Book Details</button>
+                                </div>
+                            </div>
+                            <div class="child-1">
+                                <div fxLayout="column" fxLayoutGap="15px">
+                                    <div class="child-1">
+                                        <h3>Book Name: {{bookModel?.name}}</h3>
+                                    </div>
+                                    <div class="child-2">
+                                        <h3>Book Price: {{bookModel?.price}}</h3>
+                                    </div>
+                                    <div class="child-3">
+                                        <h3>Book Author: {{bookModel?.authorId}}</h3>
+                                    </div>
+                                    <div class="child-4">
+                                        <h3>Book Category: {{bookModel?.categoryId}}</h3>
+                                    </div>
+                                    <div class="child-4">
+                                        <h3>Book Rating: {{bookModel?.avgRating}}</h3>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div fxFlex fxLayout="row" fxLayout.lt-md="column">
-                        <div fxFlexFill>
-                            <mat-form-field class="w-100">
-                                <input matInput type="number" placeholder="Book Price" formControlName="price">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <br>
-                    <div fxFlex fxLayout="row" fxLayout.lt-md="column">
-                        <div fxFlexFill fxLayoutAlign="center">
-                            <button mat-raised-button color="primary" class="w-100" type="submit">AddBook</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </mat-card-content>
             </mat-card>
         </div>
     </mat-card-content>

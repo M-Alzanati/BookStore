@@ -8,4 +8,6 @@ export interface BookModel {
     categoryId: string;
 
     price: Number;
+
+    avgRating?: Number;
 }

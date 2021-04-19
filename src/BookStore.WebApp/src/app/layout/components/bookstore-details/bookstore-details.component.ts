@@ -19,6 +19,7 @@ import { BookStoreDetailService } from './bookstore.details.service';
 })
 export class BookstoreDetailsComponent implements OnInit {
 
+  bookModel: BookModel = null;
   categories: CategoryModel[];
   authors: AuthorModel[];
   apiKey: string;
@@ -35,6 +36,10 @@ export class BookstoreDetailsComponent implements OnInit {
     text: new FormControl(''),
     bookName: new FormControl(''),
     rating: new FormControl(0)
+  });
+
+  getBookDetailsForm: FormGroup = new FormGroup({
+    bookName: new FormControl('')
   });
 
   constructor(
@@ -121,4 +126,19 @@ export class BookstoreDetailsComponent implements OnInit {
       )
   }
 
+  onGetBookDetails() {
+    this.bookstoreService
+      .getBookDetails(this.apiKey, this.getBookDetailsForm.get('bookName').value)
+      .subscribe(
+        (res: BookModel) => {
+          if (!res) {
+            this.dialog.open(MessageBoxComponent, { data: { title: 'Error', content: 'Internal Server Error' } });
+          } else {
+            res.authorId = this.authors[this.authors.findIndex(r => r.id == res.authorId)].name;
+            res.categoryId = this.categories[this.categories.findIndex(r => r.id == res.categoryId)].name;
+            this.bookModel = res;
+          }
+        }
+      )
+  }
 }

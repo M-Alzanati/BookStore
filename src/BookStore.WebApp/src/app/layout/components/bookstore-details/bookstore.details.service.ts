@@ -53,7 +53,7 @@ export class BookStoreDetailService extends BaseService {
             );
     }
 
-    getBookDetails(apiKey: string, name: string): Observable<BookModel[]> {
+    getBookDetails(apiKey: string, name: string): Observable<BookModel> {
         let url = `${this.url}/books/name/${name}?TenantKey=${apiKey}`;
         return this.http
             .get(url, this.httpOptions)
