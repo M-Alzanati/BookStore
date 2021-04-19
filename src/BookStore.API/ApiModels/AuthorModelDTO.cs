@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Collections.Generic;
 using BookStore.Core.Entities;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,13 +15,16 @@ namespace BookStore.API.ApiModels
         [Required(ErrorMessage = "Nationality Id Is Required")]
         public string NationalityId { set; get; }
 
+        public IEnumerable<string> Books { set; get; }
+
         public static AuthorModelDTO FromAuthor(Author item)
         {
             return new AuthorModelDTO
             {
                 Name = item.Name,
                 NationalityId = item.NationalityId,
-                Id = item.Id
+                Id = item.Id,
+                Books = item.Books?.Select(r => r.Name)
             };
         }
 

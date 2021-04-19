@@ -64,6 +64,15 @@ namespace BookStore.SharedKernel.Interfaces
         Task<List<T>> ListAsync<T>(Func<T, bool> predicate) where T : BaseEntity;
 
         /// <summary>
+        /// Get all entities asynchrons, and filter by a predicate
+        /// </summary>
+        /// <typeparam name="T">Entity Type</typeparam>
+        /// <param name="predicate">Filter function</param>
+        /// <returns>List of entities</returns>
+        Task<List<T>> ListAsync<T>(Expression<Func<T, IEnumerable<BaseEntity>>> include) where T : BaseEntity;
+
+
+        /// <summary>
         /// Add new entity async
         /// </summary>
         /// <typeparam name="T">Entity type</typeparam>

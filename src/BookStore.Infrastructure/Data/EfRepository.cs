@@ -70,5 +70,11 @@ namespace BookStore.Infrastructure.Data
         {
             return Task.FromResult(_dbContext.Set<T>().Where(predicate).ToList());
         }
+
+        public async Task<List<T>> ListAsync<T>(Expression<Func<T, IEnumerable<BaseEntity>>> include) where T : BaseEntity
+        {
+            var xx = _dbContext.Authors.Include(r => r.Books).ToList();
+            return await _dbContext.Set<T>().Include(include).ToListAsync();
+        }
     }
 }

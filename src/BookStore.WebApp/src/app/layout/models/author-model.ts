@@ -4,4 +4,6 @@ export interface AuthorModel {
     id: string;
 
     nationalityId: string;
+
+    books: string[];
 }

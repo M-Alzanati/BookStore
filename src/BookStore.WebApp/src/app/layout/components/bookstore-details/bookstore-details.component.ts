@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -13,6 +13,12 @@ import { TenantModel } from '../../models/tenant-model';
 import { MessageBoxComponent } from '../message-dialog/message-dialog-component';
 import { BookStoreDetailService } from './bookstore.details.service';
 
+export interface AuthorElement {
+  name: string;
+
+  book: string;
+}
+
 @Component({
   selector: 'app-bookstore-details',
   templateUrl: './bookstore-details.component.html',
@@ -25,7 +31,7 @@ export class BookstoreDetailsComponent implements OnInit {
   authors: AuthorModel[];
   apiKey: string;
   title: string;
-  dataSource: MatTableDataSource<AuthorModel>;
+  dataSource: MatTableDataSource<AuthorElement>;
   displayedColumns: string[] = ['name', 'bookName'];
 
   addBookForm: FormGroup = new FormGroup({
@@ -38,7 +44,7 @@ export class BookstoreDetailsComponent implements OnInit {
   addReviewForm: FormGroup = new FormGroup({
     text: new FormControl(''),
     bookName: new FormControl(''),
-    rating: new FormControl(0)
+    rating: new FormControl(0, [Validators.min(1), Validators.max(5)])
   });
 
   getBookDetailsForm: FormGroup = new FormGroup({
@@ -55,6 +61,17 @@ export class BookstoreDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.apiKey = this.route.snapshot.queryParams['apiKey'];
 
+    this.loadCategories();
+    this.loadAuthorsWithBooks();
+
+    this.sharedService.addTenants.subscribe(
+      (res: TenantModel) => {
+        this.title = res.name;
+      }
+    );
+  }
+
+  loadCategories() {
     this.spinner.show();
     this.bookstoreService
       .getCategories(this.apiKey)
@@ -68,39 +85,31 @@ export class BookstoreDetailsComponent implements OnInit {
           this.dialog.open(MessageBoxComponent, { data: err });
         }
       );
+  }
 
+  loadAuthorsWithBooks() {
     this.spinner.show();
     this.bookstoreService
-      .getAuthors(this.apiKey)
+      .getAuthorsWithBooks(this.apiKey)
       .subscribe(
         (res) => {
           this.spinner.hide();
           this.authors = res;
+
+          const mappedAuthors: AuthorElement[] = [];
+          for (let author of this.authors) {
+            for (let book of author.books) {
+              mappedAuthors.push({ book: book, name: author.name });
+            }
+          }
+
+          this.dataSource = new MatTableDataSource(mappedAuthors);
         },
         (err) => {
           this.spinner.hide();
           this.dialog.open(MessageBoxComponent, { data: err });
         }
       );
-
-    this.spinner.show()
-    this.bookstoreService
-      .getAuthors(this.apiKey)
-      .subscribe(
-        (res: AuthorModel[]) => {
-          this.dataSource = new MatTableDataSource(res);
-        },
-        (err) => {
-          this.spinner.hide();
-          this.dialog.open(MessageBoxComponent, { data: err });
-        }
-      );
-
-    this.sharedService.addTenants.subscribe(
-      (res: TenantModel) => {
-        this.title = res.name;
-      }
-    );
   }
 
   onAddBookFormSubmit() {
@@ -118,6 +127,7 @@ export class BookstoreDetailsComponent implements OnInit {
             this.dialog.open(MessageBoxComponent, { data: { title: 'Error', content: 'Internal Server Error' } });
           } else {
             this.dialog.open(MessageBoxComponent, { data: { title: 'Done', content: `${res.name} Has Been Added To Store` } });
+            this.loadAuthorsWithBooks();
           }
         }
       )
@@ -130,16 +140,21 @@ export class BookstoreDetailsComponent implements OnInit {
       rating: this.addReviewForm.get('rating').value
     };
 
-    this.bookstoreService.addReview(this.apiKey, model)
-      .subscribe(
-        (res: ReviewModel) => {
-          if (!res) {
-            this.dialog.open(MessageBoxComponent, { data: { title: 'Error', content: 'Internal Server Error' } });
-          } else {
-            this.dialog.open(MessageBoxComponent, { data: { title: 'Done', content: `Review Added Successfully` } });
+    if (this.addReviewForm.valid) {
+      this.bookstoreService.addReview(this.apiKey, model)
+        .subscribe(
+          (res: ReviewModel) => {
+            debugger;
+            if (!res) {
+              this.dialog.open(MessageBoxComponent, { data: { title: 'Error', content: 'Internal Server Error' } });
+            } else {
+              this.dialog.open(MessageBoxComponent, { data: { title: 'Done', content: `Review Added Successfully` } });
+            }
           }
-        }
-      )
+        )
+    } else {
+      this.dialog.open(MessageBoxComponent, { data: { title: 'Error', content: 'Please Enter A Valid Data' } });
+    }
   }
 
   onGetBookDetails() {

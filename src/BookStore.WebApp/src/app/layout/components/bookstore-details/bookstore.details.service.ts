@@ -39,6 +39,18 @@ export class BookStoreDetailService extends BaseService {
             );
     }
 
+    getAuthorsWithBooks(apiKey: string): Observable<AuthorModel[]> {
+        return this.http.get(`${this.url}/authors/withbooks?TenantKey=${apiKey}`, this.httpOptions)
+            .pipe(
+                map((response: AuthorModel[]) => {
+                    return response;
+                }),
+                catchError(error => {
+                    return of(error);
+                })
+            );
+    }
+
     getBooks(apiKey: string): Observable<BookModel[]> {
         let url = `${this.url}/books?TenantKey=${apiKey}`;
         return this.http
