@@ -132,7 +132,7 @@ export class BookstoreDetailsComponent implements OnInit {
       .subscribe(
         (res: BookModel) => {
           if (!res) {
-            this.dialog.open(MessageBoxComponent, { data: { title: 'Error', content: 'Internal Server Error' } });
+            this.dialog.open(MessageBoxComponent, { data: { title: 'Error', content: 'Book is not in the store' } });
           } else {
             res.authorId = this.authors[this.authors.findIndex(r => r.id == res.authorId)].name;
             res.categoryId = this.categories[this.categories.findIndex(r => r.id == res.categoryId)].name;
