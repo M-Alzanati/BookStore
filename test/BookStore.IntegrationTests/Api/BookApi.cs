@@ -1,4 +1,5 @@
 using Xunit;
+using System;
 using System.Net;
 using BookStore.API;
 using System.Net.Http;
@@ -23,7 +24,7 @@ namespace BookStore.IntegrationTests.Api
 
             var author = await Repository.AddAuthor();
             var category = await Repository.GetCategory();
-            var model = new BookModelDTO() { Name = "MyBook", AuthorId = author.Id, CategoryId = category.Id };
+            var model = new BookModelDTO() { Name = $"MyBook-{Guid.NewGuid().ToString()}", AuthorId = author.Id, CategoryId = category.Id };
 
             // act
             var response = await Client.PostAsync($"/books/add?TenantKey={Constants.TENANT_KEY}", ContentHelper.GetStringContent(model));

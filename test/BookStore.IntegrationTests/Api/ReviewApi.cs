@@ -25,7 +25,7 @@ namespace BookStore.IntegrationTests.Api
             await SetToken();
 
             var book = await Repository.GetBook();
-            var model = new ReviewModelDTO() { Rating = 4, BookId = book.Id, Text = "Great Book" };
+            var model = new ReviewModelDTO() { Rating = 4, BookName = book.Name, Text = "Great Book" };
 
             // act
             var response = await Client.PostAsync($"/reviews/add?TenantKey={Constants.TENANT_KEY}", ContentHelper.GetStringContent(model));
