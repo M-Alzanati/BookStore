@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using BookStore.Core.Entities;
 using System;
 using Microsoft.AspNetCore.Identity;
+using Ardalis.EFCore.Extensions;
 
 namespace BookStore.Infrastructure.Data
 {
@@ -25,6 +26,8 @@ namespace BookStore.Infrastructure.Data
             }
 
             base.OnModelCreating(builder);
+            builder.ApplyAllConfigurationsFromCurrentAssembly();
+
             builder.Entity<IdentityUser>(entity => entity.Property(m => m.Id).HasMaxLength(85));
             builder.Entity<IdentityUser>(entity => entity.Property(m => m.NormalizedEmail).HasMaxLength(85));
             builder.Entity<IdentityUser>(entity => entity.Property(m => m.NormalizedUserName).HasMaxLength(85));
@@ -48,5 +51,7 @@ namespace BookStore.Infrastructure.Data
             builder.Entity<IdentityRoleClaim<string>>(entity => entity.Property(m => m.Id).HasMaxLength(85));
             builder.Entity<IdentityRoleClaim<string>>(entity => entity.Property(m => m.RoleId).HasMaxLength(85));
         }
+
+        public DbSet<Tenant> Tenants { set; get; }
     }
 }

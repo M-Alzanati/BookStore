@@ -15,9 +15,5 @@ namespace BookStore.Core.Entities
         public string BookId { set; get; }
 
         public Book Book { set; get; }
-
-        public string TenantId { set; get; }
-
-        public Tenant Tenant { set; get; }
     }
 }

@@ -13,13 +13,6 @@ namespace BookStore.Infrastructure.Data.Config
             builder
                 .Property(r => r.Id)
                 .ValueGeneratedOnAdd();
-
-            builder
-                .HasOne<Tenant>(c => c.Tenant)
-                .WithMany(t => t.Categories)
-                .IsRequired();
-
-            builder.HasQueryFilter(a => !string.IsNullOrEmpty(a.TenantId));
         }
     }
 }

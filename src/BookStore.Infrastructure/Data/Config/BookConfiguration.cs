@@ -24,13 +24,6 @@ namespace BookStore.Infrastructure.Data.Config
                 .WithMany(c => c.Books)
                 .HasForeignKey(b => b.CategoryId);
 
-            builder
-                .HasOne<Tenant>(b => b.Tenant)
-                .WithMany(t => t.Books)
-                .IsRequired();
-
-            builder.HasQueryFilter(a => !string.IsNullOrEmpty(a.TenantId));
-
             builder.HasIndex(b => b.Name).IsUnique();
         }
     }

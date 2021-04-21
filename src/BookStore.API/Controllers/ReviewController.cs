@@ -34,17 +34,10 @@ namespace BookStore.API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var tenantId = await _tenantService.GetTenantIdAsync();
-            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
-
-            var myReview = ReviewModelDTO.FromReviewDTO(review);
-            myReview.TenantId = tenantId;
-
             var book = await _repository.GetByIdAsync<Book>(r => r.Name == review.BookName);
             if (book == null) return BadRequest($"Can't find book {review.BookName}");
 
-            myReview.BookId = book.Id;
-            var addedReview = await _repository.AddAsync<Review>(myReview);
+            var addedReview = await _repository.AddAsync<Review>(ReviewModelDTO.FromReviewDTO(review));
             return (Ok(ReviewModelDTO.FromReview(addedReview)));
         }
     }

@@ -5,6 +5,6 @@ namespace BookStore.Core
     /// </summary>
     public static class DatabasePopulator
     {
-
+        // TODO : Database per tenant
     }
 }

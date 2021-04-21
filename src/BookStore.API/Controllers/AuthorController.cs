@@ -34,13 +34,7 @@ namespace BookStore.API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var tenantId = await _tenantService.GetTenantIdAsync();
-            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
-
-            var myAuthor = AuthorModelDTO.FromAuthorDTO(model);
-            myAuthor.TenantId = tenantId;
-
-            var addedAuthor = await _repository.AddAsync<Author>(myAuthor);
+            var addedAuthor = await _repository.AddAsync<Author>(AuthorModelDTO.FromAuthorDTO(model));
             return (Ok(AuthorModelDTO.FromAuthor(addedAuthor)));
         }
 
@@ -51,9 +45,6 @@ namespace BookStore.API.Controllers
         ]
         public async Task<IActionResult> GetAuthors()
         {
-            var tenantId = await _tenantService.GetTenantIdAsync();
-            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
-
             var authors = (await _repository.ListAsync<Author>()).Select(AuthorModelDTO.FromAuthor);
             return (Ok(authors));
         }
@@ -66,9 +57,6 @@ namespace BookStore.API.Controllers
         ]
         public async Task<IActionResult> GetAuthorsWithBooks()
         {
-            var tenantId = await _tenantService.GetTenantIdAsync();
-            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
-
             var authors = (await _repository.ListAsync<Author>(r => r.Books)).Select(AuthorModelDTO.FromAuthor);
             return (Ok(authors));
         }
@@ -82,8 +70,7 @@ namespace BookStore.API.Controllers
         ]
         public async Task<IActionResult> GetNationalites()
         {
-            var tenantId = await _tenantService.GetTenantIdAsync();
-            var items = (await _repository.ListAsync<Nationality>(n => n.TenantId == tenantId))
+            var items = (await _repository.ListAsync<Nationality>())
                             .Select(NationalityDTO.FromNationality);
             return (Ok(items));
         }

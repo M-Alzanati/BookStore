@@ -38,7 +38,7 @@ namespace BookStore.IntegrationTests
         {
             var nationality = await GetNationality();
             var tenant = await GetTenant();
-            var author = new Author { Name = "Mohamed", NationalityId = nationality.Id, TenantId = tenant.Id };
+            var author = new Author { Name = "Mohamed", NationalityId = nationality.Id };
 
             var addedAuthor = await _repo.AddAsync<Author>(author);
             return addedAuthor;
@@ -55,7 +55,7 @@ namespace BookStore.IntegrationTests
             var category = await GetCategory();
             var tenant = await GetTenant();
             var author = await AddAuthor();
-            var book = new Book() { AuthorId = author.Id, TenantId = tenant.Id, Name = "MyBook", CategoryId = category.Id };
+            var book = new Book() { AuthorId = author.Id, Name = "MyBook", CategoryId = category.Id };
 
             var addedBook = await _repo.AddAsync<Book>(book);
             return addedBook;

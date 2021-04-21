@@ -15,9 +15,5 @@ namespace BookStore.Core.Entities
         public virtual Nationality Nationality { set; get; }
 
         public ICollection<Book> Books { set; get; }
-
-        public string TenantId { set; get; }
-
-        public Tenant Tenant { set; get; }
     }
 }

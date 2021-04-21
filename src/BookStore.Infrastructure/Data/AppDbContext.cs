@@ -1,6 +1,8 @@
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Core.Entities;
 using Ardalis.EFCore.Extensions;
+using BookStore.Core.Interfaces;
 
 namespace BookStore.Infrastructure.Data
 {
@@ -9,10 +11,21 @@ namespace BookStore.Infrastructure.Data
     /// </summary>
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
+        private readonly ITenantProvider _tenantProvider;
+
+        public AppDbContext(DbContextOptions<AppDbContext> options, ITenantProvider tenantProvider)
             : base(options)
         {
+            _tenantProvider = tenantProvider;
+        }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var tenant = _tenantProvider?.GetTenant();
+            if (tenant != null)
+                optionsBuilder.UseMySQL(tenant?.DatabaseConnectionString);
+
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,7 +43,5 @@ namespace BookStore.Infrastructure.Data
         public DbSet<Nationality> Nationalities { set; get; }
 
         public DbSet<Review> Reviews { set; get; }
-
-        public DbSet<Tenant> Tenants { set; get; }
     }
 }

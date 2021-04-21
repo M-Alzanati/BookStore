@@ -19,20 +19,18 @@ namespace BookStore.API
 
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = serviceProvider.GetRequiredService<AppDbContext>())
+            using (var context = serviceProvider.GetRequiredService<IdentityDbContext>())
             {
                 // Look for default tenants
                 if (!context.Tenants.Any())
                 {
                     // add default tenants
-                    PopulateDb(context);
-                }
-            }
+                    context.Set<Tenant>().AddRange(GetTenants());
+                    context.SaveChanges();
 
-            using (var context = serviceProvider.GetRequiredService<IdentityDbContext>())
-            {
-                // add admin user
-                PopulateIdentityDb(serviceProvider);
+                    // add admin user
+                    PopulateIdentityDb(serviceProvider);
+                }
             }
         }
 
@@ -52,32 +50,31 @@ namespace BookStore.API
             }
         }
 
-        private static void PopulateDb(AppDbContext context)
-        {
-            var tenants = GetTenants();
-            context.Tenants.AddRange(tenants);
+        // private static void PopulateDb(AppDbContext context)
+        // {
+        //     var nationalities = GetNationalities(tenants);
+        //     context.Set<Nationality>().AddRange(nationalities);
 
-            var nationalities = GetNationalities(tenants);
-            context.Set<Nationality>().AddRange(nationalities);
+        //     var categories = GetCategories(tenants);
+        //     context.Set<Category>().AddRange(categories);
 
-            var categories = GetCategories(tenants);
-            context.Set<Category>().AddRange(categories);
-
-            context.SaveChanges();
-        }
+        //     context.SaveChanges();
+        // }
 
         private static IEnumerable<Tenant> GetTenants()
         {
             var store1 = new Tenant
             {
                 Name = "bookstore 1",
-                ApiKey = "0d00e512-9d25-11eb-8425-c8d3ff93c86f"
+                ApiKey = "0d00e512-9d25-11eb-8425-c8d3ff93c86f",
+                DatabaseConnectionString = "server=localhost;port=3306;database=BookStore1;user=root;password=P@$$w0rd"
             };
 
             var store2 = new Tenant
             {
                 Name = "bookstore 2",
-                ApiKey = "3058d2bd-9d25-11eb-8425-c8d3ff93c86f"
+                ApiKey = "3058d2bd-9d25-11eb-8425-c8d3ff93c86f",
+                DatabaseConnectionString = "server=localhost;port=3306;database=BookStore2;user=root;password=P@$$w0rd"
             };
 
             var tenants = new List<Tenant>() { store1, store2 };
@@ -93,13 +90,11 @@ namespace BookStore.API
                 var egyptian = new Nationality
                 {
                     Name = "Egyptian",
-                    TenantId = tenant.Id
                 };
 
                 var american = new Nationality
                 {
                     Name = "American",
-                    TenantId = tenant.Id
                 };
 
                 nationalities.Add(egyptian);
@@ -118,19 +113,16 @@ namespace BookStore.API
                 var science = new Category
                 {
                     Name = "Science",
-                    TenantId = tenant.Id
                 };
 
                 var history = new Category
                 {
                     Name = "History",
-                    TenantId = tenant.Id
                 };
 
                 var technology = new Category
                 {
                     Name = "Technology",
-                    TenantId = tenant.Id
                 };
 
                 categories.Add(science);

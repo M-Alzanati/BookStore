@@ -24,7 +24,7 @@ namespace BookStore.Infrastructure.Services
         public override string GetCurrentTenant(HttpContext context)
         {
             // tenant key
-            var tenant = context.Request.Query["TenantKey"].ToString();
+            var tenant = context?.Request?.Query["TenantKey"].ToString();
 
             if (string.IsNullOrWhiteSpace(tenant) ||
                 !this._tenants.Tenants.Keys.Contains(tenant, StringComparer.InvariantCultureIgnoreCase))
@@ -35,7 +35,8 @@ namespace BookStore.Infrastructure.Services
             if (this._tenants.Tenants.TryGetValue(tenant, out var mappedTenantDate))
             {
                 var tenantExpirationDate = DateTime.Parse(mappedTenantDate);
-                if (DateTime.Now > tenantExpirationDate) {
+                if (DateTime.Now > tenantExpirationDate)
+                {
                     return null;
                 }
 

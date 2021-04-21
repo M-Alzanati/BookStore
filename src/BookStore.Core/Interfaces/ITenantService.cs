@@ -12,6 +12,6 @@ namespace BookStore.Core.Interfaces
         /// Get tenant id async
         /// </summary>
         /// <returns>tenant id</returns>
-        Task<string> GetTenantIdAsync();
+        string GetTenantId();
     }
 }

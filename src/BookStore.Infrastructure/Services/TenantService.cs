@@ -20,17 +20,15 @@ namespace BookStore.Infrastructure.Services
 
         public TenantService(
             IHttpContextAccessor accessor,
-            ITenantIdentificationService<HttpContext> tenantIdentification,
-            IRepository repository)
+            ITenantIdentificationService<HttpContext> tenantIdentification)
         {
             _httpContext = accessor.HttpContext;
             _service = tenantIdentification;
-            _repository = repository;
         }
 
-        public async Task<string> GetTenantIdAsync()
+        public string GetTenantId()
         {
-            var apiKey = await Task.FromResult(_service.GetCurrentTenant(_httpContext));
+            var apiKey = _service?.GetCurrentTenant(_httpContext);
 
             Guid apiKeyGuid;
             if (!Guid.TryParse(apiKey, out apiKeyGuid))
@@ -38,8 +36,7 @@ namespace BookStore.Infrastructure.Services
                 return null;
             }
 
-            var tenant = await _repository.GetByIdAsync<Tenant>(r => r.ApiKey == apiKey);
-            return tenant.Id;
+            return apiKey;
         }
     }
 }

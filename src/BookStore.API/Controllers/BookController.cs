@@ -35,13 +35,7 @@ namespace BookStore.API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var tenantId = await _tenantService.GetTenantIdAsync();
-            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
-
-            var book = BookModelDTO.FromBookDTO(model);
-            book.TenantId = tenantId;
-
-            var addedBook = await _repository.AddAsync<Book>(book);
+            var addedBook = await _repository.AddAsync<Book>(BookModelDTO.FromBookDTO(model));
             return (Ok(BookModelDTO.FromBook(addedBook)));
         }
 
@@ -52,10 +46,7 @@ namespace BookStore.API.Controllers
         ]
         public async Task<IActionResult> GetBooks()
         {
-            var tenantId = await _tenantService.GetTenantIdAsync();
-            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
-
-            var items = (await _repository.ListAsync<Book>(b => b.TenantId == tenantId))
+            var items = (await _repository.ListAsync<Book>())
                             .Select(BookModelDTO.FromBook);
             return (Ok(items));
         }
@@ -68,12 +59,9 @@ namespace BookStore.API.Controllers
         ]
         public async Task<IActionResult> GetBookByName([FromRoute] string name)
         {
-            var tenantId = await _tenantService.GetTenantIdAsync();
-            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
-
             var myBook = await _repository.GetByIdAsync<Book>(
                 book => book.Reviews,
-                book => book.Name == name && book.TenantId == tenantId
+                book => book.Name == name
             );
             if (myBook == null) return BadRequest($"Book: {name} not found");
 
@@ -88,11 +76,8 @@ namespace BookStore.API.Controllers
         ]
         public async Task<IActionResult> GetBookById([FromRoute] string id)
         {
-            var tenantId = await _tenantService.GetTenantIdAsync();
-            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
-
             var myBook = await _repository.GetByIdAsync<Book>(
-                book => book.Id == id && book.TenantId == tenantId
+                book => book.Id == id
             );
 
             return (Ok(BookModelDTO.FromBook(myBook)));
@@ -106,10 +91,7 @@ namespace BookStore.API.Controllers
         ]
         public async Task<IActionResult> GetCategories()
         {
-            var tenantId = await _tenantService.GetTenantIdAsync();
-            if (string.IsNullOrEmpty(tenantId)) return BadRequest("Tenant key is not correct");
-
-            var items = (await _repository.ListAsync<Category>(n => n.TenantId == tenantId))
+            var items = (await _repository.ListAsync<Category>())
                             .Select(CategoryModelDTO.FromCategory);
             return (Ok(items));
         }

@@ -1,6 +1,5 @@
 using System;
 using System.Text;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +10,8 @@ using BookStore.Core.Entities;
 using BookStore.Core.DTO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
+using BookStore.Core.Interfaces;
+using BookStore.Infrastructure.Services;
 
 namespace BookStore.Infrastructure
 {
@@ -19,11 +20,11 @@ namespace BookStore.Infrastructure
     /// </summary>
     public static class StartupSetup
     {
-        public static void AddDbContext(this IServiceCollection services, string connectionString) =>
-            services.AddDbContext<AppDbContext>(options => options.UseMySQL(connectionString));
-
-        public static void AddIdentityDbContext(this IServiceCollection services, string connectionString, string validIssuer, string validKey)
+        // public static void AddDbContext(this IServiceCollection services, string connectionString) =>
+        //     services.AddDbContext<AppDbContext>(options => options.UseMySQL(connectionString));
+        public static void AddIdentityDbContext(this IServiceCollection services, string connectionString, string defaultTenantConnectionString, string validIssuer, string validKey)
         {
+            services.AddDbContext<AppDbContext>(o => { o.UseMySQL(defaultTenantConnectionString); });
             services.AddDbContext<IdentityDbContext>(opts => opts.UseMySQL(connectionString));
 
             services.AddDefaultIdentity<ApplicationUser>(opts =>
@@ -74,6 +75,8 @@ namespace BookStore.Infrastructure
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(validKey))
                 };
             });
+
+            services.AddTransient<ITenantProvider, TenantProvider>();
         }
 
         public static TenantMapping GetTenantMapping(this IConfiguration configuration)

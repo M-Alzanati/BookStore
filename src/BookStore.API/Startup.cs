@@ -29,11 +29,12 @@ namespace BookStore.API
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var defaultTenantConnectionString = Configuration.GetConnectionString("DefaultTenantConnection");
+
             var issuer = Configuration["Jwt:Issuer"];
             var key = Configuration["Jwt:Key"];
 
-            services.AddDbContext(connectionString);
-            services.AddIdentityDbContext(connectionString, issuer, key);
+            services.AddIdentityDbContext(connectionString, defaultTenantConnectionString, issuer, key);
             services.UseTenant();
 
             services.AddControllers();

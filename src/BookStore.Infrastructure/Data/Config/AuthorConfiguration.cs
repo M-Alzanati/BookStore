@@ -24,13 +24,6 @@ namespace BookStore.Infrastructure.Data.Config
                 .HasOne<Nationality>(a => a.Nationality)
                 .WithMany(n => n.Authors)
                 .IsRequired();
-
-            builder
-                .HasOne<Tenant>(a => a.Tenant)
-                .WithMany(t => t.Authors)
-                .IsRequired();
-
-            builder.HasQueryFilter(a => !string.IsNullOrEmpty(a.TenantId));
         }
     }
 }
